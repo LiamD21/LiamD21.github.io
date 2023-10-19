@@ -1,5 +1,7 @@
 body {
-    margin: 20px;
+    margin: 50px;
     background-color: aliceblue;
     text-align: center;
+    font-family: "Times New Roman", serif;
+    font-size: 30px;
 }
