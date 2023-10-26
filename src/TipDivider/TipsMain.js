@@ -19,9 +19,17 @@ function getHours(form){
     return floatHoursArr;
 }
 
-function main(form){
-    let numPeople = getNumPeople(form);
-    let totalCash = getTotalCash(form);
-    let totalCard = getTotalCard(form);
-    let hours = getHours(form);
+function divideCardTips(total, numP){
+    return Math.round((total/numP)*100)/100;
 }
+
+function main(form){
+    // let numPeople = getNumPeople(form);
+    // let totalCash = getTotalCash(form);
+    // let totalCard = getTotalCard(form);
+    // let hours = getHours(form);
+
+    console.log(divideCardTips(100, 3));
+}
+
+main();
