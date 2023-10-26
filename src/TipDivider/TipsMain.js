@@ -1,1 +1,3 @@
-let x = document.getElementById("Number of People").value;
+function getInput(){
+    let x = document.getElementById("numPeople").value;
+}
