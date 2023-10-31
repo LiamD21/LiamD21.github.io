@@ -1,6 +1,7 @@
 // Global Variables
 let canvas;
 let ctx;
+let overStartButton;
 
 function initializeCanvas() {
     canvas = document.getElementById("canvas");
@@ -16,9 +17,16 @@ function addText(){
     ctx.fillText("Connect Four", canvas.width/2, canvas.height/4);
 }
 
+function drawMenuButtons(){
+    ctx.fillStyle = "#888888";
+    ctx.fillRect(canvas.width/2 - 100, canvas.height*2/3, 200, 100);
+    ctx.strokeRect(canvas.width/2 - 100, canvas.height*2/3, 200, 100);
+}
+
 function main(){
     initializeCanvas();
     addText();
+    drawMenuButtons();
 }
 
 main();
