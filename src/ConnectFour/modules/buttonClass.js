@@ -1,4 +1,4 @@
-class Button {
+export default class Button {
     constructor(ctx, x, y, height, width, text, color) {
         this.ctx = ctx;
         this.x = x;
@@ -23,5 +23,3 @@ class Button {
         this.ctx.strokeRect(this.x, this.y, this.width, this.height);
     }
 }
-
-module.exports = Button;

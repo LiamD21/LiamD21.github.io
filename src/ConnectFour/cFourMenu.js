@@ -1,5 +1,5 @@
 // Importing classes
-const Button = require("./modules/buttonClass");
+import Button from "./modules/buttonClass.js";
 
 // Global Variables
 let canvas;
