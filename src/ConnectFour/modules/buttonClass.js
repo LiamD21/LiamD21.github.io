@@ -18,7 +18,8 @@ export default class Button {
         this.ctx.fillRect(this.x, this.y, this.width, this.height);
         this.ctx.fillStyle = "#000000";
         this.ctx.textAlign = "center";
-        this.ctx.font = "10px";
+        this.ctx.font = "50px sans-serif";
+        this.ctx.fillText(this.text, this.getCenterXY()[0], this.getCenterXY()[1] + this.height/6, this.width);
         this.ctx.lineWidth = 10;
         this.ctx.strokeRect(this.x, this.y, this.width, this.height);
     }
