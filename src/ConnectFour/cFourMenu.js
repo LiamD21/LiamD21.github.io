@@ -49,7 +49,7 @@ function handleMouseClick(event){
     // Check if we clicked on the play button
     if (clickX > menuButton.x && clickX < menuButton.x + menuButton.width && clickY > menuButton.y && clickY < menuButton.y + menuButton.height){
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-        gameMain(ctx);
+        gameMain(ctx, canvas);
     }
 }
 
