@@ -14,7 +14,7 @@ let isOverPlayButton = false;
 function main(){
     initializeCanvas();
     addText();
-    drawMenuButtons();
+    playButton = new Button(ctx, canvas.width/2 - 100, canvas.height*2/3, 100, 200, "PLAY", "#888888");
 }
 
 /**
@@ -39,14 +39,6 @@ function addText(){
     ctx.textAlign = "center";
     ctx.fillStyle = "#330072";
     ctx.fillText("Connect Four", canvas.width/2, canvas.height/4);
-}
-
-/**
- * Draw the play button onto the canvas
- * @return {Button} the play button object
- */
-function drawMenuButtons(){
-    playButton = new Button(ctx, canvas.width/2 - 100, canvas.height*2/3, 100, 200, "PLAY", "#888888");
 }
 
 /**
