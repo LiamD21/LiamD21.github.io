@@ -5,7 +5,17 @@ import {gameMain} from "./cFourGame.mjs"
 // Global Variables
 let canvas;
 let ctx;
-let menuButton;
+let playButton;
+let isOverPlayButton = false;
+
+/**
+ * The main setup and handling loop for the main menu
+ */
+function main(){
+    initializeCanvas();
+    addText();
+    drawMenuButtons();
+}
 
 /**
  * Initialize the canvas, graphics context, and canvas size elements
@@ -32,22 +42,20 @@ function addText(){
 }
 
 /**
- * Draw the main menu button onto the canvas
+ * Draw the play button onto the canvas
+ * @return {Button} the play button object
  */
 function drawMenuButtons(){
-    menuButton = new Button(ctx, canvas.width/2 - 100, canvas.height*2/3, 100, 200, "PLAY", "#888888");
+    playButton = new Button(ctx, canvas.width/2 - 100, canvas.height*2/3, 100, 200, "PLAY", "#888888");
 }
 
 /**
  * if there is a mouseclick event, check location and deal with accordingly
- * @param event the mouse click event
+ * @param event
  */
 function handleMouseClick(event){
-    let clickX = event.clientX;
-    let clickY = event.clientY;
-
-    // Check if we clicked on the play button
-    if (clickX > menuButton.x && clickX < menuButton.x + menuButton.width && clickY > menuButton.y && clickY < menuButton.y + menuButton.height){
+    // Check if we were over the play button when there was a click
+    if (isOverPlayButton){
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         canvas.removeEventListener("click", handleMouseClick);
         canvas.removeEventListener("mousemove", handleMouseMove);
@@ -55,24 +63,26 @@ function handleMouseClick(event){
     }
 }
 
+/**
+ * handles mouse move events
+ * if the mouse moves over the button, change button color to have an interactive UI
+ * @param event
+ */
 function handleMouseMove(event){
     // check if mouse is hovering over the play button
-    if (event.clientX > menuButton.x && event.clientX < menuButton.x + menuButton.width && event.clientY > menuButton.y && event.clientY < menuButton.y + menuButton.height) {
-        menuButton.recolor("#d5d5d5");
+    if (event.clientX > playButton.getX() && event.clientX < playButton.getX() + playButton.getWidth() && event.clientY > playButton.getY() && event.clientY < playButton.getY() + playButton.getHeight()) {
+        // check if the mouse was just off the button
+        if (!isOverPlayButton) {
+            isOverPlayButton = true;
+            playButton.recolor("#d5d5d5");
+        }
     }
 
-    else {
-        menuButton.recolor("#888888");
+    // if mouse is not over play button, but it just was over the button
+    else if (isOverPlayButton){
+        isOverPlayButton = false;
+        playButton.recolor("#888888");
     }
-}
-
-/**
- * The main setup and handling loop for the main menu
- */
-function main(){
-    initializeCanvas();
-    addText();
-    drawMenuButtons();
 }
 
 // call the main function on start
