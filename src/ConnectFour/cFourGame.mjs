@@ -21,7 +21,6 @@ export function gameMain(ctx, canvas){
 
     // initialize the game and draw the empty board
     let board = new GameBoard(canvas.width, canvas.height, cellSize, ctx)
-    board.drawBoard();
 
     // attach handlers for placing pieces
     canvas.addEventListener("click", handleMouseClick);

@@ -36,7 +36,6 @@ function addText(){
  */
 function drawMenuButtons(){
     menuButton = new Button(ctx, canvas.width/2 - 100, canvas.height*2/3, 100, 200, "PLAY", "#888888");
-    menuButton.drawNew();
 }
 
 /**

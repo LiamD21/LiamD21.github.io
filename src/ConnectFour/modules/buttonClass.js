@@ -7,6 +7,8 @@ export class Button {
         this.width = width;
         this.text = text;
         this.color = color;
+
+        this.drawNew();
     }
 
     /**

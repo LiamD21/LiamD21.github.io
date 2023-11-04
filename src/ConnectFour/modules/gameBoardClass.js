@@ -5,6 +5,9 @@ export class GameBoard{
         this.height = height;
         this.cellsize = cellSize;
         this.gameState = [[0,0,0,0,0,0,0],[0,0,0,0,0,0,0],[0,0,0,0,0,0,0],[0,0,0,0,0,0,0],[0,0,0,0,0,0,0],[0,0,0,0,0,0,0]];
+        this.turn = 1;
+
+        this.drawBoard();
     }
 
     drawBoard(){
@@ -44,12 +47,26 @@ export class GameBoard{
         this.context.fill();
     }
 
-    playPiece(player, pieceX, pieceY){
+    playPiece(player, pieceCol){
+        let piece = 0;
         if (player === 1){
-            this.gameState[pieceY][pieceX] = 1;
+            piece = 1;
         }
         else if (player === 2){
-            this.gameState[pieceY][pieceX] = 2;
+            piece = 2;
         }
+
+        let colIndex = 5;
+        while (colIndex >= 0){
+            if (this.gameState[colIndex][pieceCol] === 0){
+                this.gameState[colIndex][pieceCol] = piece;
+                colIndex = -1;
+            }
+            else{
+                colIndex -=1;
+            }
+        }
+
+        this.drawBoard();
     }
 }
