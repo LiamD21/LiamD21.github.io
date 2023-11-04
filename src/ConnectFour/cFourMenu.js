@@ -1,6 +1,6 @@
 // Importing classes
 import {Button} from "./modules/buttonClass.js";
-import {gameMain} from "./cFourGame.js"
+import {gameMain} from "./cFourGame.mjs"
 
 // Global Variables
 let canvas;
