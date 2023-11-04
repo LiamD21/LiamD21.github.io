@@ -16,9 +16,9 @@ function initializeCanvas() {
     canvas.height = window.innerHeight;
     canvas.width = window.innerWidth;
 
-    // attach handler
-    canvas.onclick = handleMouseClick;
-    canvas.onmousemove = handleMouseMove;
+    // attach listeners
+    canvas.addEventListener("click", handleMouseClick);
+    canvas.addEventListener("mousemove", handleMouseMove);
 }
 
 /**
@@ -50,6 +50,8 @@ function handleMouseClick(event){
     // Check if we clicked on the play button
     if (clickX > menuButton.x && clickX < menuButton.x + menuButton.width && clickY > menuButton.y && clickY < menuButton.y + menuButton.height){
         ctx.clearRect(0, 0, canvas.width, canvas.height);
+        canvas.removeEventListener("click", handleMouseClick);
+        canvas.removeEventListener("mousemove", handleMouseMove);
         gameMain(ctx, canvas);
     }
 }
