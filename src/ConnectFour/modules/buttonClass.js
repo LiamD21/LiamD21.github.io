@@ -20,9 +20,9 @@ export class Button {
     /**
      * Draws a button on the canvas given the attributes for the class
      */
-    draw(){
+    draw(fillColor){
         // drawing the rectangle
-        this.ctx.fillStyle = this.color;
+        this.ctx.fillStyle = fillColor;
         this.ctx.fillRect(this.x, this.y, this.width, this.height);
 
         // drawing the button text
@@ -34,5 +34,13 @@ export class Button {
         // Drawing the button outline
         this.ctx.lineWidth = 10;
         this.ctx.strokeRect(this.x, this.y, this.width, this.height);
+    }
+
+    recolor(newColor){
+        this.draw(newColor);
+    }
+
+    drawNew(){
+        this.draw(this.color);
     }
 }
