@@ -1,6 +1,6 @@
 // importing
-import {Piece} from "./objectClasses/pieceClass";
-import {GameBoard} from "./objectClasses/gameBoardClass";
+import {Piece} from "./modules/pieceClass";
+import {GameBoard} from "./modules/gameBoardClass";
 
 function handleMouseClick(event) {
     let clickX = event.clientX;
