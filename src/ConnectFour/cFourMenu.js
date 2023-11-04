@@ -18,6 +18,7 @@ function initializeCanvas() {
 
     // attach handler
     canvas.onclick = handleMouseClick;
+    canvas.onmousemove = handleMouseMove;
 }
 
 /**
@@ -35,7 +36,7 @@ function addText(){
  */
 function drawMenuButtons(){
     menuButton = new Button(ctx, canvas.width/2 - 100, canvas.height*2/3, 100, 200, "PLAY", "#888888");
-    menuButton.draw();
+    menuButton.drawNew();
 }
 
 /**
@@ -50,6 +51,17 @@ function handleMouseClick(event){
     if (clickX > menuButton.x && clickX < menuButton.x + menuButton.width && clickY > menuButton.y && clickY < menuButton.y + menuButton.height){
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         gameMain(ctx, canvas);
+    }
+}
+
+function handleMouseMove(event){
+    // check if mouse is hovering over the play button
+    if (event.clientX > menuButton.x && event.clientX < menuButton.x + menuButton.width && event.clientY > menuButton.y && event.clientY < menuButton.y + menuButton.height) {
+        menuButton.recolor("#d5d5d5");
+    }
+
+    else {
+        menuButton.recolor("#888888");
     }
 }
 
