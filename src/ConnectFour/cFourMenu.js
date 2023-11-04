@@ -1,5 +1,5 @@
 // Importing classes
-import {Button} from "./modules/buttonClass.js";
+import {Button} from "./objectClasses/buttonClass.js";
 import {gameMain} from "./cFourGame.js"
 
 // Global Variables

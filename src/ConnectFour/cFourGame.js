@@ -1,44 +1,29 @@
-// global variables
-let ctx, canvas;
+// importing
+import {Piece} from "./objectClasses/pieceClass";
+import {GameBoard} from "./objectClasses/gameBoardClass";
 
-/**
- * Draws a game board on the canvas
- */
-function drawBoard(cellSize){
-    let boardTop = cellSize;
-    let boardLeft = canvas.width/2-(cellSize*3.5);
+function handleMouseClick(event) {
+    let clickX = event.clientX;
+    let clickY = event.clientY;
 
-    // draw the main blue square for the board
-    ctx.fillStyle = "#1138f6"
-    ctx.fillRect(boardLeft, boardTop, cellSize*7, cellSize*6);
-
-    // draw all the cells
-    for (let i = 0; i < 7; i++) {
-        for (let j = 0; j < 6; j++) {
-            drawCircle("white", boardLeft + (i * cellSize) + cellSize / 2, boardTop + (j * cellSize) + cellSize / 2, cellSize / 2 - 5);
-        }
-    }
-}
-
-function drawCircle(color, x, y, rad){
-    ctx.fillStyle = color;
-    ctx.beginPath();
-    ctx.arc(x, y, rad, 0, Math.PI*2, false);
-    ctx.fill();
+    // check if the event was on the board
+    //if ()
 }
 
 /**
  * The main game loop
- * @param context the graphics context object for the canvas that we are drawing on
- * @param mainCanvas the main canvas that we draw on
+ * @param ctx
+ * @param canvas
  */
-export function gameMain(context, mainCanvas){
-    ctx = context;
-    canvas = mainCanvas;
+export function gameMain(ctx, canvas){
 
     // find what size we should make the board
     let cellSize = canvas.height/8;
 
-    // draw the initial game
-    drawBoard(cellSize);
+    // initialize the game and draw the empty board
+    let board = new GameBoard(canvas.width, canvas.height, cellSize, ctx)
+    board.drawBoard();
+
+    // attach handlers for placing pieces
+    canvas.addEventListener("click", handleMouseClick);
 }
