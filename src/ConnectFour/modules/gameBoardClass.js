@@ -87,4 +87,36 @@ export class GameBoard{
 
         this.#drawBoard();
     }
+
+    /**
+     * gets the coordinates of the top of the board
+     * @return {number}
+     */
+    getTop(){
+        return this.#cellSize;
+    }
+
+    /**
+     * gets the coordinates of the bottom of the board
+     * @return {number}
+     */
+    getBottom(){
+        return this.#height - this.#cellSize;
+    }
+
+    /**
+     * gets the coordinates of the left side of the board
+     * @return {number}
+     */
+    getLeft(){
+        return this.#width/2-(this.#cellSize*3.5);
+    }
+
+    /**
+     * gets the coordinates of the right side of the board
+     * @return {number}
+     */
+    getRight(){
+        return this.#width - this.getLeft();
+    }
 }

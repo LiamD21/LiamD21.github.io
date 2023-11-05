@@ -6,13 +6,22 @@ export class NextPiece{
     #context
     #initialCenterX
     #initialCenterY
+    #boardTop
+    #boardBottom
+    #boardLeft
+    #boardRight
+    #prevSide
 
-    constructor(color, radius, height, ctx) {
+    constructor(color, radius, height, ctx, boardLeft, boardRight, boardTop, boardBottom) {
         this.#color = color;
         this.#radius = radius;
         this.#context = ctx;
         this.#centerX = 3 * this.#radius;
         this.#centerY = height - (3 * this.#radius);
+        this.#boardBottom = boardBottom;
+        this.#boardRight = boardRight;
+        this.#boardTop = boardTop;
+        this.#boardLeft = boardLeft;
 
         this.#initialCenterX = this.#centerX;
         this.#initialCenterY = this.#centerY;
@@ -30,15 +39,61 @@ export class NextPiece{
         this.#context.fill();
     }
 
+    /**
+     * moves a piece around the board
+     * @param newX the new x coordinates of the piece
+     * @param newY the new y coordinates of the piece
+     */
     move(newX, newY){
-        this.#context.clearRect(this.#centerX - this.#radius, this.#centerY - this.#radius, this.#radius*2, this.#radius*2);
+        // clear old spot
+        this.#context.clearRect(this.#centerX - this.#radius, this.#centerY - this.#radius, this.#radius*2 + 3, this.#radius*2 + 3);
+
+        // check if the object is being dragged inside the board
+        let inBoard = newX + this.#radius + 2 > this.#boardLeft && newX - this.#radius - 2 < this.#boardRight && newY + this.#radius + 2 > this.#boardTop && newY - this.#radius - 2 < this.#boardBottom;
+
+        if (newX < this.#boardLeft && !inBoard){
+            this.#prevSide = "left";
+        }
+        else if (newX > this.#boardRight && !inBoard){
+            this.#prevSide = "right"
+        }
+        else if (newY < this.#boardTop && !inBoard){
+            this.#prevSide = "top";
+        }
+        else if (newY > this.#boardBottom && !inBoard){
+            this.#prevSide = "bottom";
+        }
+
+        // prevent dragging over the board - must go around
+        if (inBoard){
+            switch (this.#prevSide){
+                case "left":
+                    newX = this.#boardLeft - this.#radius - 5;
+                    break;
+                case "right":
+                    newX = this.#boardRight + this.#radius + 5;
+                    break;
+                case "top":
+                    newY = this.#boardTop - this.#radius - 5;
+                    break;
+                case "bottom":
+                    newY = this.#boardBottom + this.#radius + 5;
+            }
+        }
+
         this.#draw(newX, newY);
         this.#centerY = newY;
         this.#centerX = newX;
     }
 
+    /**
+     * Resets the piece from its current location to its original location
+     */
     reset(){
-
+        this.#context.clearRect(this.#centerX - this.#radius, this.#centerY - this.#radius, this.#radius*2, this.#radius*2);
+        this.#centerY = this.#initialCenterY;
+        this.#centerX = this.#initialCenterX;
+        this.#draw(this.#centerX, this.#centerY);
     }
 
     /**

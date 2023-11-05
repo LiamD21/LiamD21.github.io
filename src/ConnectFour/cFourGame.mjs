@@ -36,7 +36,7 @@ export function gameMain(ctx, canvas){
     canvas.addEventListener("mousemove", handleMouseDragged);
 
     // main gameplay loop
-    addNextPiece(canvas.height, ctx, (cellSize/2) - 5);
+    addNextPiece(canvas.height, ctx, (cellSize/2) - 5, board);
 }
 
 /**
@@ -44,11 +44,12 @@ export function gameMain(ctx, canvas){
  * @param height the height of the canvas
  * @param context the graphics context that we are drawing on
  * @param radius the radius of the circle to draw
+ * @param board the game board object
  */
-function addNextPiece(height, context, radius){
+function addNextPiece(height, context, radius, board){
     // if the state is equal to placed, we need to add another piece
     if(currentState === states.PLACED){
-        nextPiece = new NextPiece("red", radius, height, context);
+        nextPiece = new NextPiece("red", radius, height, context, board.getLeft(), board.getRight(), board.getTop(), board.getBottom());
         currentState = states.READY;
     }
 }
@@ -74,6 +75,7 @@ function handleMouseRelease(event){
     // if the state is currently selected, go back to placed
     if (currentState === states.SELECTED){
         currentState = states.PLACED;
+        nextPiece.reset();
     }
 }
 
