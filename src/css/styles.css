@@ -1,32 +1,50 @@
+/* Specific class styles */
 .column {
+    display: inline;
     float: left;
-    width: 50%;
+    width: 46%;
+    margin: 2%;
 }
-.topnav {
-    background-color: #2db7fa;
-    overflow: hidden;
-}
-.topnav a {
-    padding: 15px;
-    display: inline-flex;
-    float: left;
-}
-.topnav a.active {
-    background-color: #b3e2ff;
-    color: black;
-}
-.topnav a:hover {
-    background-color: #006191;
-    color: white;
+.active {
+    background-color: #037aff;
 }
 
-header {
-    background-color: #47bffa;
-}
+/* General Section Styles */
 body {
     margin: 0;
     background-color: white;
 }
+header {
+    background-color: #5ba7fd;
+    padding-top: 15px;
+}
+
+/* The Nav Bar Styles */
+ul {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #00183f;
+}
+li {
+    display: inline;
+    float: left;
+}
+li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+}
+li a:hover {
+    background-color: #003572;
+}
+
+/* Main Body Info Styles */
 h1 {
     text-align: center;
     font-family: "Times New Roman", serif;
