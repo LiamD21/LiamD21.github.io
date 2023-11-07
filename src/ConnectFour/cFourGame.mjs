@@ -6,7 +6,6 @@ import {NextPiece} from "./modules/nextPieceClass.js";
 const states = {
     READY: Symbol("Ready"),
     SELECTED: Symbol("Selected"),
-    PLACED: Symbol("Placed")
 }
 
 // global variables
@@ -14,6 +13,7 @@ let overNextPiece;
 let nextPiece;
 let win;
 let currentState;
+let board;
 
 /**
  * The main game loop
@@ -22,21 +22,25 @@ let currentState;
  */
 export function gameMain(ctx, canvas){
     win = false;
-    currentState = states.PLACED;
+    currentState = states.READY;
 
     // find what size we should make the board
     let cellSize = canvas.height/8;
 
+    // variables for each player's color
+    let p1Color = "red"
+    let p2Color = "yellow"
+
     // initialize the game and draw the empty board
-    let board = new GameBoard(canvas.width, canvas.height, cellSize, ctx)
+    board = new GameBoard(canvas.width, canvas.height, cellSize, ctx, p1Color, p2Color);
+
+    // add the next piece to be dragged in
+    addNextPiece(canvas.height, ctx, (cellSize/2) - 5, board, p1Color);
 
     // attach handlers for placing pieces
     canvas.addEventListener("mousedown", handleMousePress);
     canvas.addEventListener("mouseup", handleMouseRelease);
     canvas.addEventListener("mousemove", handleMouseDragged);
-
-    // main gameplay loop
-    addNextPiece(canvas.height, ctx, (cellSize/2) - 5, board);
 }
 
 /**
@@ -45,13 +49,10 @@ export function gameMain(ctx, canvas){
  * @param context the graphics context that we are drawing on
  * @param radius the radius of the circle to draw
  * @param board the game board object
+ * @param initialColor the string color value for the first color used, player1's color
  */
-function addNextPiece(height, context, radius, board){
-    // if the state is equal to placed, we need to add another piece
-    if(currentState === states.PLACED){
-        nextPiece = new NextPiece("red", radius, height, context, board.getLeft(), board.getRight(), board.getTop(), board.getBottom());
-        currentState = states.READY;
-    }
+function addNextPiece(height, context, radius, board, initialColor){
+    nextPiece = new NextPiece(initialColor, radius, height, context, board.getLeft(), board.getRight(), board.getTop(), board.getBottom());
 }
 
 /**
@@ -74,8 +75,9 @@ function handleMousePress(event) {
 function handleMouseRelease(event){
     // if the state is currently selected, go back to placed
     if (currentState === states.SELECTED){
-        currentState = states.PLACED;
-        nextPiece.reset();
+        board.nextTurn();
+        nextPiece.reset(board.getColor());
+        currentState = states.READY;
     }
 }
 

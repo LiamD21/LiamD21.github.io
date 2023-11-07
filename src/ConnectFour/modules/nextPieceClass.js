@@ -88,11 +88,13 @@ export class NextPiece{
 
     /**
      * Resets the piece from its current location to its original location
+     * @param color the color to make the new piece
      */
-    reset(){
-        this.#context.clearRect(this.#centerX - this.#radius, this.#centerY - this.#radius, this.#radius*2 + 5, this.#radius*2 + 5);
+    reset(color){
+        this.#context.clearRect(this.#centerX - this.#radius - 5, this.#centerY - this.#radius - 5, this.#radius*2 + 10, this.#radius*2 + 10);
         this.#centerY = this.#initialCenterY;
         this.#centerX = this.#initialCenterX;
+        this.#color = color;
         this.#draw(this.#centerX, this.#centerY);
     }
 
