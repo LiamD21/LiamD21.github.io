@@ -46,10 +46,10 @@ export class NextPiece{
      */
     move(newX, newY){
         // clear old spot
-        this.#context.clearRect(this.#centerX - this.#radius, this.#centerY - this.#radius, this.#radius*2 + 3, this.#radius*2 + 3);
+        this.#context.clearRect(this.#centerX - this.#radius - 5, this.#centerY - this.#radius - 5, this.#radius*2 + 10, this.#radius*2 + 10);
 
         // check if the object is being dragged inside the board
-        let inBoard = newX + this.#radius + 2 > this.#boardLeft && newX - this.#radius - 2 < this.#boardRight && newY + this.#radius + 2 > this.#boardTop && newY - this.#radius - 2 < this.#boardBottom;
+        let inBoard = newX + this.#radius + 6 > this.#boardLeft && newX - this.#radius - 6 < this.#boardRight && newY + this.#radius + 6 > this.#boardTop && newY - this.#radius - 6 < this.#boardBottom;
 
         if (newX < this.#boardLeft && !inBoard){
             this.#prevSide = "left";
@@ -68,16 +68,16 @@ export class NextPiece{
         if (inBoard){
             switch (this.#prevSide){
                 case "left":
-                    newX = this.#boardLeft - this.#radius - 5;
+                    newX = this.#boardLeft - this.#radius - 6;
                     break;
                 case "right":
-                    newX = this.#boardRight + this.#radius + 5;
+                    newX = this.#boardRight + this.#radius + 6;
                     break;
                 case "top":
-                    newY = this.#boardTop - this.#radius - 5;
+                    newY = this.#boardTop - this.#radius - 6;
                     break;
                 case "bottom":
-                    newY = this.#boardBottom + this.#radius + 5;
+                    newY = this.#boardBottom + this.#radius + 6;
             }
         }
 
@@ -90,7 +90,7 @@ export class NextPiece{
      * Resets the piece from its current location to its original location
      */
     reset(){
-        this.#context.clearRect(this.#centerX - this.#radius, this.#centerY - this.#radius, this.#radius*2, this.#radius*2);
+        this.#context.clearRect(this.#centerX - this.#radius, this.#centerY - this.#radius, this.#radius*2 + 5, this.#radius*2 + 5);
         this.#centerY = this.#initialCenterY;
         this.#centerX = this.#initialCenterX;
         this.#draw(this.#centerX, this.#centerY);
