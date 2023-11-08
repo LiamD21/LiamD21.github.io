@@ -6,14 +6,18 @@ export class GameBoard{
     #cellSize;
     #gameState;
     #turn;
+    #color1;
+    #color2;
 
-    constructor(width, height, cellSize, ctx){
+    constructor(width, height, cellSize, ctx, color1, color2){
         this.#context = ctx;
         this.#width = width;
         this.#height = height;
         this.#cellSize = cellSize;
         this.#gameState = [[0,0,0,0,0,0,0],[0,0,0,0,0,0,0],[0,0,0,0,0,0,0],[0,0,0,0,0,0,0],[0,0,0,0,0,0,0],[0,0,0,0,0,0,0]];
         this.#turn = 1;
+        this.#color1 = color1;
+        this.#color2 = color2;
 
         this.#drawBoard();
     }
@@ -118,5 +122,30 @@ export class GameBoard{
      */
     getRight(){
         return this.#width - this.getLeft();
+    }
+
+    /**
+     * gets the string value of the current player's color
+     * @return {*}
+     */
+    getColor(){
+        if (this.#turn === 1) {
+            return this.#color1;
+        }
+        else {
+            return this.#color2;
+        }
+    }
+
+    /**
+     * Changes turn variable to the next value
+     */
+    nextTurn(){
+        if (this.#turn === 1){
+            this.#turn = 2;
+        }
+        else {
+            this.#turn = 1;
+        }
     }
 }
