@@ -93,6 +93,20 @@ export class GameBoard{
     }
 
     /**
+     * Checks if a col is already full
+     * @param pieceCol the number col to check
+     * @return {boolean}
+     */
+    isColFull(pieceCol){
+        for (let i = 0; i < 6; i++){
+            if (this.#gameState[i][pieceCol] === 0){
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
      * gets the coordinates of the top of the board
      * @return {number}
      */

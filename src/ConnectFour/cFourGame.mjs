@@ -77,8 +77,8 @@ function handleMouseRelease(event){
     if (currentState === states.SELECTED){
         let nextCol = nextPiece.checkAboveCol();
 
-        // if we are above a col, drop it in
-        if (nextCol !== -1){
+        // if we are above a col, drop it in if the col is not already full
+        if (nextCol !== -1 && !board.isColFull(nextCol-1)){
             board.playPiece(nextCol-1);
             board.nextTurn();
         }
