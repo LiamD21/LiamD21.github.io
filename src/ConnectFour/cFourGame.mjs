@@ -75,7 +75,13 @@ function handleMousePress(event) {
 function handleMouseRelease(event){
     // if the state is currently selected, go back to placed
     if (currentState === states.SELECTED){
-        board.nextTurn();
+        let nextCol = nextPiece.checkAboveCol();
+
+        // if we are above a col, drop it in
+        if (nextCol !== -1){
+            board.playPiece(nextCol-1);
+            board.nextTurn();
+        }
         nextPiece.reset(board.getColor());
         currentState = states.READY;
     }

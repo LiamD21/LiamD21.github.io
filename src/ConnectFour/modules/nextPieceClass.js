@@ -112,4 +112,22 @@ export class NextPiece{
 
         return hyp <= this.#radius;
     }
+
+    /**
+     * Checks if the piece is being dragged above a col
+     * @return {number} the number col that the piece is dragged over
+     */
+    checkAboveCol(){
+        let cellSiz = (this.#boardRight - this.#boardLeft)/7
+        if (this.#centerY + this.#radius < this.#boardTop){
+            if ((this.#centerX > this.#boardLeft) && (this.#centerX < this.#boardRight)){
+                for (let i = 0; i < 7; i++){
+                    if (this.#centerX < this.#boardLeft + (cellSiz*i)){
+                        return i
+                    }
+                }
+            }
+        }
+        return -1;
+    }
 }
