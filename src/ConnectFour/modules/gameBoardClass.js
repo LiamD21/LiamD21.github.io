@@ -92,6 +92,57 @@ export class GameBoard{
         this.#drawBoard();
     }
 
+    checkWin(){
+        // go through all rows looking for 4 in a row
+        for (let row = 0; row < 6; row++){
+            let rowCount = 1;
+            let rowItem = 0;
+            for (let col = 0; col < 7; col++){
+                if (this.#gameState[row][col] !== 0){
+                    if (rowItem === this.#gameState[row][col]){
+                        rowCount += 1;
+                        if (rowCount === 4){
+                            return rowItem;
+                        }
+                    }
+                    else {
+                        rowItem = this.#gameState[row][col];
+                        rowCount = 1;
+                    }
+                }
+                else {
+                    rowCount = 1;
+                    rowItem = 0;
+                }
+            }
+        }
+
+        // go through the cols looking for 4 in a row
+        for (let col = 0; col < 7; col++){
+            let rowCount = 1;
+            let rowItem = 0;
+            for (let row = 0; row < 6; row++){
+                if (this.#gameState[row][col] !== 0){
+                    if (rowItem === this.#gameState[row][col]){
+                        rowCount += 1;
+                        if (rowCount === 4){
+                            return rowItem;
+                        }
+                    }
+                    else {
+                        rowItem = this.#gameState[row][col];
+                        rowCount = 1;
+                    }
+                }
+                else {
+                    rowCount = 1;
+                    rowItem = 0;
+                }
+            }
+        }
+        return 0;
+    }
+
     /**
      * Checks if a col is already full
      * @param pieceCol the number col to check
