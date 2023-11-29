@@ -140,6 +140,10 @@ export class GameBoard{
                 }
             }
         }
+
+        // go through diagonals to find 4 in a row
+        // TODO diag search
+
         return 0;
     }
 

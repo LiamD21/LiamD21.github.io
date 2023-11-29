@@ -1,6 +1,7 @@
 // importing
 import {GameBoard} from "./modules/gameBoardClass.js";
 import {NextPiece} from "./modules/nextPieceClass.js";
+import {winMain} from "./cFourWinScreen.js";
 
 // create a state enum
 const states = {
@@ -24,6 +25,9 @@ export function gameMain(ctx, canvas){
     win = false;
     currentState = states.READY;
 
+    // clear the current canvas
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
     // find what size we should make the board
     let cellSize = canvas.height/8;
 
@@ -39,7 +43,9 @@ export function gameMain(ctx, canvas){
 
     // attach handlers for placing pieces
     canvas.addEventListener("mousedown", handleMousePress);
-    canvas.addEventListener("mouseup", handleMouseRelease);
+    canvas.addEventListener("mouseup", function(){
+        handleMouseRelease(event, canvas, ctx);
+    });
     canvas.addEventListener("mousemove", handleMouseDragged);
 }
 
@@ -71,8 +77,10 @@ function handleMousePress(event) {
  * Handles mouse released events
  * if the item to place is selected, and it is over a col, place it, else, reset it
  * @param event
+ * @param canvas the canvas object to pass to win if there was a win
+ * @param ctx the graphics context to pass to win if there was a win
  */
-function handleMouseRelease(event){
+function handleMouseRelease(event, canvas, ctx){
     // if the state is currently selected, go back to placed
     if (currentState === states.SELECTED){
         let nextCol = nextPiece.checkAboveCol();
@@ -85,7 +93,7 @@ function handleMouseRelease(event){
             // check for a win
             let win = board.checkWin();
             if (win !== 0){
-                console.log(win)
+                winMain(canvas, ctx, win);
             }
         }
         nextPiece.reset(board.getColor());
