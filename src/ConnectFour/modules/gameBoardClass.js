@@ -27,11 +27,11 @@ export class GameBoard{
      * @private
      */
     #drawBoard(){
-        let boardTop = this.#cellSize;
+        let boardTop = 1.5 * this.#cellSize;
         let boardLeft = this.#width/2-(this.#cellSize*3.5);
 
         // draw the main blue square for the board
-        this.#context.fillStyle = "#1138f6"
+        this.#context.fillStyle = "#1138f6";
         this.#context.fillRect(boardLeft, boardTop, this.#cellSize*7, this.#cellSize*6);
 
         // draw all the cells
@@ -47,7 +47,7 @@ export class GameBoard{
                     color = "yellow";
                 }
                 else {
-                    color = "white"
+                    color = "white";
                 }
 
                 // draw a circle on the correct cell
@@ -166,7 +166,7 @@ export class GameBoard{
      * @return {number}
      */
     getTop(){
-        return this.#cellSize;
+        return this.#cellSize * 1.5;
     }
 
     /**
@@ -174,7 +174,7 @@ export class GameBoard{
      * @return {number}
      */
     getBottom(){
-        return this.#height - this.#cellSize;
+        return this.#height - (0.5 * this.#cellSize);
     }
 
     /**
