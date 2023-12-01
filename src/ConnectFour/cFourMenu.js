@@ -10,19 +10,38 @@ let isOverPlayButton = false;
 
 /**
  * The main setup and handling loop for the main menu
+ * @param firstPlay a boolean, true if this is the first time entering the program
+ * @param can the canvas on which to draw on
+ * @param ct the graphics context to be used to draw with
  */
-function main(){
-    initializeCanvas();
+export function main(firstPlay, can, ct){
+    if(firstPlay){
+        initializeCanvas(firstPlay, null, null);
+    }
+    else {
+        initializeCanvas(firstPlay, can, ct);
+    }
     addText();
     playButton = new Button(ctx, canvas.width/2 - 100, canvas.height*2/3, 100, 200, "PLAY", "#888888");
 }
 
 /**
  * Initialize the canvas, graphics context, and canvas size elements
+ * @param firstPlay a boolean, true if this is the first time entering the program
+ * @param can the canvas on which to draw on
+ * @param ct the graphics context to be used to draw with
  */
-function initializeCanvas() {
-    canvas = document.getElementById("canvas");
-    ctx = canvas.getContext("2d");
+function initializeCanvas(firstPlay, can, ct) {
+    if (firstPlay) {
+        canvas = document.getElementById("canvas");
+        ctx = canvas.getContext("2d");
+    }
+
+    else {
+        canvas = can;
+        ctx = ct;
+    }
+    // get the height and width
     canvas.height = window.innerHeight;
     canvas.width = window.innerWidth;
 
@@ -78,4 +97,4 @@ function handleMouseMove(event){
 }
 
 // call the main function on start
-main();
+main(true);

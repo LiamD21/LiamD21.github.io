@@ -1,7 +1,7 @@
 // importing
 import {GameBoard} from "./modules/gameBoardClass.js";
 import {NextPiece} from "./modules/nextPieceClass.js";
-import {winMain} from "./cFourWinScreen.js";
+import {winMain} from "./cFourWinScreen.mjs";
 
 // create a state enum
 const states = {
@@ -93,11 +93,20 @@ function handleMouseRelease(event, canvas, ctx){
             // check for a win
             let win = board.checkWin();
             if (win !== 0){
+                canvas.removeEventListener("mousedown", handleMousePress);
+                canvas.removeEventListener("mouseup", handleMouseRelease);
+                canvas.removeEventListener("mousemove", handleMouseDragged);
                 winMain(canvas, ctx, win);
             }
+            else {
+                nextPiece.reset(board.getColor());
+                currentState = states.READY;
+            }
         }
-        nextPiece.reset(board.getColor());
-        currentState = states.READY;
+        else {
+            nextPiece.reset(board.getColor());
+            currentState = states.READY;
+        }
     }
 }
 
