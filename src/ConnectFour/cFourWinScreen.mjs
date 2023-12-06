@@ -7,12 +7,13 @@ let menuButton, playButton;
 let overMenuButton, overNewGameButton;
 let canvas;
 let ctx;
+let win;
 
 /**
  * the main initializer function for the main win screen loop
- * @param win the integer player number of the winning player
+ * @param w the integer player number of the winning player
  */
-export function winMain(win){
+export function winMain(w){
     canvas = document.getElementById("canvas");
     ctx = canvas.getContext("2d");
 
@@ -22,6 +23,7 @@ export function winMain(win){
 
     overMenuButton = false;
     overNewGameButton = false;
+    win = w;
 
     drawPage(win);
     addListeners();
@@ -70,11 +72,15 @@ function handleMouseClick(event){
     }
 
     // Check if we were over the play again button when there was a click
-    if (overNewGameButton){
+    else if (overNewGameButton){
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         canvas.removeEventListener("click", handleMouseClick);
         canvas.removeEventListener("mousemove", handleMouseMove);
         gameMain();
+    }
+
+    else {
+        drawPage(win);
     }
 }
 
