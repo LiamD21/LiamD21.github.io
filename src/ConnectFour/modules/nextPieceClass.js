@@ -118,11 +118,10 @@ export class NextPiece{
      * @return {number} the number col that the piece is dragged over
      */
     checkAboveCol(){
-        // TODO fix bug where you can't drop into last col
         let cellSiz = (this.#boardRight - this.#boardLeft)/7
         if (this.#centerY + this.#radius < this.#boardTop){
             if ((this.#centerX > this.#boardLeft) && (this.#centerX < this.#boardRight)){
-                for (let i = 0; i < 7; i++){
+                for (let i = 1; i < 8; i++){
                     if (this.#centerX < this.#boardLeft + (cellSiz*i)){
                         return i
                     }
