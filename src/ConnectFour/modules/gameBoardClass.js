@@ -142,7 +142,113 @@ export class GameBoard{
         }
 
         // go through diagonals to find 4 in a row
-        // TODO diag search
+        // go through down-right diagonals first
+        for (let row = 2; row >= 1; row--){
+            let rowCount = 1;
+            let rowItem = 0;
+            let moveRow = row;
+            let moveCol = 0;
+            while (moveRow <= 5){
+                if (this.#gameState[moveRow][moveCol] !== 0){
+                    if (rowItem === this.#gameState[moveRow][moveCol]){
+                        rowCount += 1;
+                        if (rowCount === 4){
+                            return rowItem;
+                        }
+                    }
+                    else {
+                        rowItem = this.#gameState[moveRow][moveCol];
+                        rowCount = 1;
+                    }
+                }
+                else {
+                    rowCount = 1;
+                    rowItem = 0;
+                }
+                moveRow ++;
+                moveCol ++;
+            }
+        }
+        for (let col = 0; col < 4; col++){
+            let rowCount = 1;
+            let rowItem = 0;
+            let moveRow = 0;
+            let moveCol = col;
+            while (moveRow <= 5){
+                if (this.#gameState[moveRow][moveCol] !== 0){
+                    if (rowItem === this.#gameState[moveRow][moveCol]){
+                        rowCount += 1;
+                        if (rowCount === 4){
+                            return rowItem;
+                        }
+                    }
+                    else {
+                        rowItem = this.#gameState[moveRow][moveCol];
+                        rowCount = 1;
+                    }
+                }
+                else {
+                    rowCount = 1;
+                    rowItem = 0;
+                }
+                moveRow ++;
+                moveCol ++;
+            }
+        }
+
+        // go through down-left diagonals first
+        for (let row = 2; row >= 1; row--){
+            let rowCount = 1;
+            let rowItem = 0;
+            let moveRow = row;
+            let moveCol = 6;
+            while (moveRow <= 5){
+                if (this.#gameState[moveRow][moveCol] !== 0){
+                    if (rowItem === this.#gameState[moveRow][moveCol]){
+                        rowCount += 1;
+                        if (rowCount === 4){
+                            return rowItem;
+                        }
+                    }
+                    else {
+                        rowItem = this.#gameState[moveRow][moveCol];
+                        rowCount = 1;
+                    }
+                }
+                else {
+                    rowCount = 1;
+                    rowItem = 0;
+                }
+                moveRow ++;
+                moveCol --;
+            }
+        }
+        for (let col = 6; col >= 3; col--){
+            let rowCount = 1;
+            let rowItem = 0;
+            let moveRow = 0;
+            let moveCol = col;
+            while (moveRow <= 5){
+                if (this.#gameState[moveRow][moveCol] !== 0){
+                    if (rowItem === this.#gameState[moveRow][moveCol]){
+                        rowCount += 1;
+                        if (rowCount === 4){
+                            return rowItem;
+                        }
+                    }
+                    else {
+                        rowItem = this.#gameState[moveRow][moveCol];
+                        rowCount = 1;
+                    }
+                }
+                else {
+                    rowCount = 1;
+                    rowItem = 0;
+                }
+                moveRow ++;
+                moveCol --;
+            }
+        }
 
         return 0;
     }
@@ -151,7 +257,7 @@ export class GameBoard{
      * Checks if a col is already full
      * @param pieceCol the number col to check
      * @return {boolean}
-     */
+     **/
     isColFull(pieceCol){
         for (let i = 0; i < 6; i++){
             if (this.#gameState[i][pieceCol] === 0){
