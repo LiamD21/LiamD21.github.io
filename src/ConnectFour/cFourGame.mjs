@@ -15,18 +15,20 @@ let nextPiece;
 let win;
 let currentState;
 let board;
+let canvas, ctx;
 
 /**
  * The main game loop
- * @param ctx
- * @param canvas
  */
-export function gameMain(ctx, canvas){
+export function gameMain(){
     win = false;
     currentState = states.READY;
+    canvas = document.getElementById("canvas");
+    ctx = canvas.getContext("2d");
 
-    // clear the current canvas
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    // get the height and width
+    canvas.height = window.innerHeight;
+    canvas.width = window.innerWidth;
 
     // find what size we should make the board
     let cellSize = canvas.height/8;
@@ -39,7 +41,7 @@ export function gameMain(ctx, canvas){
     board = new GameBoard(canvas.width, canvas.height, cellSize, ctx, p1Color, p2Color);
 
     // add the next piece to be dragged in
-    addNextPiece(canvas.height, ctx, (cellSize/2) - 5, board, p1Color);
+    addNextPiece(canvas.height, (cellSize/2) - 5, board, p1Color);
 
     // attach handlers for placing pieces
     canvas.addEventListener("mousedown", handleMousePress);
@@ -52,13 +54,12 @@ export function gameMain(ctx, canvas){
 /**
  * Adds the piece to be played next to the corner of the board
  * @param height the height of the canvas
- * @param context the graphics context that we are drawing on
  * @param radius the radius of the circle to draw
  * @param board the game board object
  * @param initialColor the string color value for the first color used, player1's color
  */
-function addNextPiece(height, context, radius, board, initialColor){
-    nextPiece = new NextPiece(initialColor, radius, height, context, board.getLeft(), board.getRight(), board.getTop(), board.getBottom());
+function addNextPiece(height, radius, board, initialColor){
+    nextPiece = new NextPiece(initialColor, radius, height, ctx, board.getLeft(), board.getRight(), board.getTop(), board.getBottom());
 }
 
 /**
@@ -77,10 +78,8 @@ function handleMousePress(event) {
  * Handles mouse released events
  * if the item to place is selected, and it is over a col, place it, else, reset it
  * @param event
- * @param canvas the canvas object to pass to win if there was a win
- * @param ctx the graphics context to pass to win if there was a win
  */
-function handleMouseRelease(event, canvas, ctx){
+function handleMouseRelease(event){
     // if the state is currently selected, go back to placed
     if (currentState === states.SELECTED){
         let nextCol = nextPiece.checkAboveCol();
@@ -96,7 +95,7 @@ function handleMouseRelease(event, canvas, ctx){
                 canvas.removeEventListener("mousedown", handleMousePress);
                 canvas.removeEventListener("mouseup", handleMouseRelease);
                 canvas.removeEventListener("mousemove", handleMouseDragged);
-                winMain(canvas, ctx, win);
+                winMain(win);
             }
             else {
                 nextPiece.reset(board.getColor());

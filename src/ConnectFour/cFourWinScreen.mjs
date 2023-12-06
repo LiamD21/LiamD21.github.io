@@ -1,21 +1,28 @@
 import {Button} from "./modules/buttonClass.js";
 import {main} from "./cFourMenu.js";
+import {gameMain} from "./cFourGame.mjs";
 
 // Global variables
-let playButton;
-let overMenuButton;
+let menuButton, playButton;
+let overMenuButton, overNewGameButton;
 let canvas;
 let ctx;
 
 /**
  * the main initializer function for the main win screen loop
- * @param can the canvas object
- * @param ct the graphics context to use to draw
  * @param win the integer player number of the winning player
  */
-export function winMain(can, ct, win){
-    canvas = can;
-    ctx = ct;
+export function winMain(win){
+    canvas = document.getElementById("canvas");
+    ctx = canvas.getContext("2d");
+
+    // get the height and width
+    canvas.height = window.innerHeight;
+    canvas.width = window.innerWidth;
+
+    overMenuButton = false;
+    overNewGameButton = false;
+
     drawPage(win);
     addListeners();
 }
@@ -45,7 +52,8 @@ function drawPage(win){
     ctx.fillText(winText, canvas.width/2, canvas.height/4);
 
     // add a button to the screen
-    playButton = new Button(ctx, canvas.width/2 - 100, canvas.height*2/3, 100, 200, "MAIN MENU", "#888888");
+    menuButton = new Button(ctx, canvas.width/3 - 125, canvas.height*2/3, 100, 250, "MAIN MENU", "#888888");
+    playButton = new Button(ctx, canvas.width*2/3 - 125, canvas.height*2/3, 100, 250, "PLAY AGAIN", "#888888");
 }
 
 /**
@@ -58,7 +66,15 @@ function handleMouseClick(event){
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         canvas.removeEventListener("click", handleMouseClick);
         canvas.removeEventListener("mousemove", handleMouseMove);
-        main(false, canvas, ctx);
+        main();
+    }
+
+    // Check if we were over the play again button when there was a click
+    if (overNewGameButton){
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        canvas.removeEventListener("click", handleMouseClick);
+        canvas.removeEventListener("mousemove", handleMouseMove);
+        gameMain();
     }
 }
 
@@ -68,17 +84,32 @@ function handleMouseClick(event){
  */
 function handleMouseMove(event){
     // check if mouse is hovering over the menu button
-    if (event.clientX > playButton.getX() && event.clientX < playButton.getX() + playButton.getWidth() && event.clientY > playButton.getY() && event.clientY < playButton.getY() + playButton.getHeight()) {
+    if (event.clientX > menuButton.getX() && event.clientX < menuButton.getX() + menuButton.getWidth() && event.clientY > menuButton.getY() && event.clientY < menuButton.getY() + menuButton.getHeight()) {
         // check if the mouse was just off the button
         if (!overMenuButton) {
             overMenuButton = true;
-            playButton.recolor("#d5d5d5");
+            menuButton.recolor("#d5d5d5");
         }
     }
 
     // if mouse is not over menu button, but it just was over the button
     else if (overMenuButton){
         overMenuButton = false;
+        menuButton.recolor("#888888");
+    }
+
+    // check if mouse is hovering over the play again button
+    if (event.clientX > playButton.getX() && event.clientX < playButton.getX() + playButton.getWidth() && event.clientY > playButton.getY() && event.clientY < playButton.getY() + playButton.getHeight()) {
+        // check if the mouse was just off the button
+        if (!overNewGameButton) {
+            overNewGameButton = true;
+            playButton.recolor("#d5d5d5");
+        }
+    }
+
+    // if mouse is not over play button, but it just was over the button
+    else if (overNewGameButton){
+        overNewGameButton = false;
         playButton.recolor("#888888");
     }
 }

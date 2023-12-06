@@ -196,7 +196,7 @@ export class GameBoard{
             }
         }
 
-        // go through down-left diagonals first
+        // go through down-left diagonals next
         for (let row = 2; row >= 1; row--){
             let rowCount = 1;
             let rowItem = 0;

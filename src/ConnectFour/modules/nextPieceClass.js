@@ -16,8 +16,8 @@ export class NextPiece{
         this.#color = color;
         this.#radius = radius;
         this.#context = ctx;
-        this.#centerX = 3 * this.#radius;
-        this.#centerY = height - (3 * this.#radius);
+        this.#centerX = 2.5 * this.#radius;
+        this.#centerY = 3 * this.#radius;
         this.#boardBottom = boardBottom;
         this.#boardRight = boardRight;
         this.#boardTop = boardTop;
