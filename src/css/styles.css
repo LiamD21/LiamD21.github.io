@@ -5,6 +5,13 @@
     width: 46%;
     margin: 2%;
 }
+.columnNonMain {
+    display: inline;
+    float: left;
+    width: 46%;
+    margin: 2%;
+    padding-top: 3%;
+}
 .active {
     background-color: #037aff;
 }
