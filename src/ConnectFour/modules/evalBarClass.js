@@ -23,10 +23,28 @@ export class evalBar{
     }
 
     draw(){
+        // draw the bar itself
         this.#ctx.fillStyle = "red";
-        this.#ctx.fillRect(10, this.#height/5, this.#width/15, this.#height*3/5);
+        this.#ctx.fillRect(this.#width*19/20 - 15, this.#height/6, this.#width/20, this.#height*4/6);
         this.#ctx.fillStyle = "yellow";
-        let bottomBarY = (this.#height/5 + ((10+this.#evalScore)/20)*(this.#height*3/5));
-        this.#ctx.fillRect(10, bottomBarY, this.#width/15 ,this.#height*4/5 - bottomBarY);
+        let bottomBarY = (this.#height/6 + ((10+this.#evalScore)/20)*(this.#height*4/6));
+        this.#ctx.fillRect(this.#width*19/20 - 15, bottomBarY, this.#width/20 ,this.#height*5/6 - bottomBarY);
+
+        // add score text to the bar
+        this.#ctx.fillStyle = "black";
+        this.#ctx.font = "20px sans-serif";
+        this.#ctx.textAlign = "center";
+
+        if (this.#evalScore === 0) {
+            this.#ctx.fillText("0", this.#width - 15 - this.#width / 40, this.#height / 6 + 25);
+            this.#ctx.fillText("0", this.#width - 15 - this.#width / 40, this.#height * 5 / 6 - 25);
+        }
+        else if (this.#evalScore > 0){
+            this.#ctx.fillText(this.#evalScore, this.#width - 15 - this.#width / 40, this.#height / 6 + 25);
+        }
+        else {
+            let num = this.#evalScore * -1;
+            this.#ctx.fillText(num.toString(), this.#width - 15 - this.#width / 40, this.#height * 5 / 6 - 25);
+        }
     }
 }
