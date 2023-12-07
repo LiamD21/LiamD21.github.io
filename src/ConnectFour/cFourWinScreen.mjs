@@ -44,9 +44,17 @@ function addListeners() {
 function drawPage(win){
     // clear the page to start
     ctx.clearRect(0, 0, canvas.width, canvas.height);
+    let winText;
 
     // add text for the winner
-    let winText = "Player " + win + " Wins!"
+    if (win !== -1) {
+        winText = "Player " + win + " Wins!"
+    }
+
+    // in the case of a tie, set the shown text to a tie statement
+    else {
+        winText = "TIE!"
+    }
 
     ctx.font = "100px serif";
     ctx.textAlign = "center";

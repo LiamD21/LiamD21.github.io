@@ -91,11 +91,19 @@ function handleMouseRelease(event){
 
             // check for a win
             let win = board.checkWin();
-            if (win !== 0){
+            // check if there are any remaining places
+            let done = board.checkDone();
+
+            if (win !== 0 || done){
                 canvas.removeEventListener("mousedown", handleMousePress);
                 canvas.removeEventListener("mouseup", handleMouseRelease);
                 canvas.removeEventListener("mousemove", handleMouseDragged);
-                winMain(win);
+                if (win !== 0) {
+                    winMain(win);
+                }
+                else {
+                    winMain(-1);
+                }
             }
             else {
                 nextPiece.reset(board.getColor());

@@ -92,6 +92,21 @@ export class GameBoard{
         this.#drawBoard();
     }
 
+    /**
+     * Checks if all spaces are full
+     * @return {boolean}
+     */
+    checkDone(){
+        for (let row = 0; row < 6; row++){
+            for (let col = 0; col < 7; col++){
+                if (this.#gameState[row][col] === 0){
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
     checkWin(){
         // go through all rows looking for 4 in a row
         for (let row = 0; row < 6; row++){
