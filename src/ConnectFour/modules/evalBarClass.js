@@ -20,9 +20,10 @@ export class evalBar{
      */
     setEvalScore(score){
         this.#evalScore = score;
+        this.#draw();
     }
 
-    draw(){
+    #draw(){
         // draw the bar itself
         this.#ctx.fillStyle = "red";
         this.#ctx.fillRect(this.#width*19/20 - 15, this.#height/6, this.#width/20, this.#height*4/6);

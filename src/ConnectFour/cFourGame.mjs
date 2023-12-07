@@ -47,7 +47,6 @@ export function gameMain(){
     updateGameBoard(board.getGameState());
     evBar = new evalBar(canvas, ctx);
     evBar.setEvalScore(getEvalScore());
-    evBar.draw();
 
     // add the next piece to be dragged in
     addNextPiece(canvas.height, (cellSize/2) - 5, board, p1Color);
@@ -98,6 +97,7 @@ function handleMouseRelease(event){
             board.playPiece(nextCol-1);
             board.nextTurn();
             updateGameBoard(board.getGameState());
+            evBar.setEvalScore(getEvalScore());
 
             // check for a win
             let win = board.checkWin();
