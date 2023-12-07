@@ -338,4 +338,12 @@ export class GameBoard{
             this.#turn = 1;
         }
     }
+
+    /**
+     * gets the current game state
+     * @return {*}
+     */
+    getGameState(){
+        return this.#gameState;
+    }
 }

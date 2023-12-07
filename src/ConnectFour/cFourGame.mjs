@@ -2,6 +2,9 @@
 import {GameBoard} from "./modules/gameBoardClass.js";
 import {NextPiece} from "./modules/nextPieceClass.js";
 import {winMain} from "./cFourWinScreen.mjs";
+import {updateGameBoard} from "./modules/cFourEvaluator.js";
+import {getEvalScore} from "./modules/cFourEvaluator.js";
+import {evalBar} from "./modules/evalBarClass.js";
 
 // create a state enum
 const states = {
@@ -14,7 +17,7 @@ let overNextPiece;
 let nextPiece;
 let win;
 let currentState;
-let board;
+let board, evBar;
 let canvas, ctx;
 
 /**
@@ -39,6 +42,12 @@ export function gameMain(){
 
     // initialize the game and draw the empty board
     board = new GameBoard(canvas.width, canvas.height, cellSize, ctx, p1Color, p2Color);
+
+    // Initialize the evaluator and draw the eval bar
+    updateGameBoard(board.getGameState());
+    evBar = new evalBar(canvas, ctx);
+    evBar.setEvalScore(getEvalScore());
+    evBar.draw();
 
     // add the next piece to be dragged in
     addNextPiece(canvas.height, (cellSize/2) - 5, board, p1Color);
@@ -88,6 +97,7 @@ function handleMouseRelease(event){
         if (nextCol !== -1 && !board.isColFull(nextCol-1)){
             board.playPiece(nextCol-1);
             board.nextTurn();
+            updateGameBoard(board.getGameState());
 
             // check for a win
             let win = board.checkWin();
