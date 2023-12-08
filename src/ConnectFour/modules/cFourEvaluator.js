@@ -68,15 +68,24 @@ function checkPossibilities(){
 
     let p1RowStreaks = [0, 0, 0, 0, 0, 0];
     let p2RowStreaks = [0, 0, 0, 0, 0, 0];
-    let emptyLastFour = [[-1, -1, -1, -1], [-1, -1, -1, -1], [-1, -1, -1, -1], [-1, -1, -1, -1], [-1, -1, -1, -1], [-1, -1, -1, -1]];
-    let p1RowLastFour = emptyLastFour;
-    let p2RowLastFour = emptyLastFour;
+    let p1Row1LastFour = [0, 0, 0, 0];
+    let p1Row2LastFour = [0, 0, 0, 0];
+    let p1Row3LastFour = [0, 0, 0, 0];
+    let p1Row4LastFour = [0, 0, 0, 0];
+    let p1Row5LastFour = [0, 0, 0, 0];
+    let p1Row6LastFour = [0, 0, 0, 0];
+    let p2Row1LastFour = [0, 0, 0, 0];
+    let p2Row2LastFour = [0, 0, 0, 0];
+    let p2Row3LastFour = [0, 0, 0, 0];
+    let p2Row4LastFour = [0, 0, 0, 0];
+    let p2Row5LastFour = [0, 0, 0, 0];
+    let p2Row6LastFour = [0, 0, 0, 0];
     // check vertical and horizontal 4s that can be made
     for (let col = 0; col < 7; col++){
         p1ColStreak = 0;
-        p1ColLastFour = [-1, -1, -1, -1];
+        p1ColLastFour = [0, 0, 0, 0];
         p2ColStreak = 0;
-        p2ColLastFour = [-1, -1, -1, -1];
+        p2ColLastFour = [0, 0, 0, 0];
         for(let row = 0; row < 6; row++){
             // check the current element
             if (gameBoard[row][col] === 0){
@@ -102,34 +111,114 @@ function checkPossibilities(){
             for (let i = 3; i >= 1; i--){
                 p1ColLastFour[i] = p1ColLastFour[i-1];
                 p2ColLastFour[i] = p2ColLastFour[i-1];
-                p1RowLastFour[row][i] = p1RowLastFour[row][i-1];
-                p2RowLastFour[row][i] = p2RowLastFour[row][i-1];
+                switch (row){
+                    case 0:
+                        p1Row1LastFour[i] = p1Row1LastFour[i-1];
+                        p2Row1LastFour[i] = p2Row1LastFour[i-1];
+                        break;
+                    case 1:
+                        p1Row2LastFour[i] = p1Row2LastFour[i-1];
+                        p2Row2LastFour[i] = p2Row2LastFour[i-1];
+                        break;
+                    case 2:
+                        p1Row3LastFour[i] = p1Row3LastFour[i-1];
+                        p2Row3LastFour[i] = p2Row3LastFour[i-1];
+                        break;
+                    case 3:
+                        p1Row4LastFour[i] = p1Row4LastFour[i-1];
+                        p2Row4LastFour[i] = p2Row4LastFour[i-1];
+                        break;
+                    case 4:
+                        p1Row5LastFour[i] = p1Row5LastFour[i-1];
+                        p2Row5LastFour[i] = p2Row5LastFour[i-1];
+                        break;
+                    case 5:
+                        p1Row6LastFour[i] = p1Row6LastFour[i-1];
+                        p2Row6LastFour[i] = p2Row6LastFour[i-1];
+                        break;
+                }
             }
             p1ColLastFour[0] = gameBoard[row][col];
             p2ColLastFour[0] = gameBoard[row][col];
-            p1RowLastFour[row][0] = gameBoard[row][col];
-            p2RowLastFour[row][0] = gameBoard[row][col];
+            switch (row){
+                case 0:
+                    p1Row1LastFour[0] = gameBoard[row][col];
+                    p2Row1LastFour[0] = gameBoard[row][col];
+                    break;
+                case 1:
+                    p1Row2LastFour[0] = gameBoard[row][col];
+                    p2Row2LastFour[0] = gameBoard[row][col];
+                    break;
+                case 2:
+                    p1Row3LastFour[0] = gameBoard[row][col];
+                    p2Row3LastFour[0] = gameBoard[row][col];
+                    break;
+                case 3:
+                    p1Row4LastFour[0] = gameBoard[row][col];
+                    p2Row4LastFour[0] = gameBoard[row][col];
+                    break;
+                case 4:
+                    p1Row5LastFour[0] = gameBoard[row][col];
+                    p2Row5LastFour[0] = gameBoard[row][col];
+                    break;
+                case 5:
+                    p1Row6LastFour[0] = gameBoard[row][col];
+                    p2Row6LastFour[0] = gameBoard[row][col];
+                    break;
+            }
 
             let counters;
             // if we have a vertical streak of 4 or more, add one way to get four and check for any pieces already there
             if (p1ColStreak >= 4){
                 p1Score ++;
-                counters = incrementScores(countLastFour(1, p1ColLastFour), p1Singles, p1Doubles, p1Triples, p1Win);
-                p1Singles = counters[0];
-                p1Doubles = counters[1];
-                p1Triples = counters[2];
-                p1Win = counters[3];
+                if (row === 5 || gameBoard[row + 1][col] !== 1) {
+                    counters = incrementScores(countLastFour(1, p1ColLastFour), p1Singles, p1Doubles, p1Triples, p1Win);
+                    p1Singles = counters[0];
+                    p1Doubles = counters[1];
+                    p1Triples = counters[2];
+                    p1Win = counters[3];
+                }
             }
             if (p2ColStreak >= 4){
                 p2Score ++;
-                counters = incrementScores(countLastFour(2, p2ColLastFour), p2Singles, p2Doubles, p2Triples, p2Win);
-                p2Singles = counters[0];
-                p2Doubles = counters[1];
-                p2Triples = counters[2];
-                p2Win = counters[3];
+                if (row === 5 || gameBoard[row + 1][col] !== 1) {
+                    counters = incrementScores(countLastFour(2, p2ColLastFour), p2Singles, p2Doubles, p2Triples, p2Win);
+                    p2Singles = counters[0];
+                    p2Doubles = counters[1];
+                    p2Triples = counters[2];
+                    p2Win = counters[3];
+                }
             }
 
             // if we have a horizontal streak of 4 or more, add one way to get four and check for pieces already there
+            let p1RowLastFour, p2RowLastFour;
+            switch (row){
+                case 0:
+                    p1RowLastFour = p1Row1LastFour;
+                    p2RowLastFour = p2Row1LastFour;
+                    break;
+                case 1:
+                    p1RowLastFour = p1Row2LastFour;
+                    p2RowLastFour = p2Row2LastFour;
+                    break;
+                case 2:
+                    p1RowLastFour = p1Row3LastFour;
+                    p2RowLastFour = p2Row3LastFour;
+                    break;
+                case 3:
+                    p1RowLastFour = p1Row4LastFour;
+                    p2RowLastFour = p2Row4LastFour;
+                    break;
+                case 4:
+                    p1RowLastFour = p1Row5LastFour;
+                    p2RowLastFour = p2Row5LastFour;
+                    break;
+                case 5:
+                    p1RowLastFour = p1Row6LastFour;
+                    p2RowLastFour = p2Row6LastFour;
+                    break;
+            }
+
             if (p1RowStreaks[row] >= 4){
                 p1Score ++;
                 counters = incrementScores(countLastFour(1, p1RowLastFour), p1Singles, p1Doubles, p1Triples, p1Win);
@@ -158,7 +247,6 @@ function checkPossibilities(){
         p2DiagLastFour = [-1, -1, -1, -1];
         let moveRow, moveCol;
 
-        console.log(i);
         // for the right-down diagonals across the top
         if (i < 4) {
             moveRow = 0;
@@ -213,7 +301,6 @@ function checkPossibilities(){
             if (p1DiagStreak >= 4){
                 p1Score ++;
                 counters = incrementScores(countLastFour(1, p1DiagLastFour), p1Singles, p1Doubles, p1Triples, p1Win);
-                console.log(p1DiagLastFour);
                 p1Singles = counters[0];
                 p1Doubles = counters[1];
                 p1Triples = counters[2];
