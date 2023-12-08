@@ -181,7 +181,7 @@ function checkPossibilities(){
             }
             if (p2ColStreak >= 4){
                 p2Score ++;
-                if (row === 5 || gameBoard[row + 1][col] !== 1) {
+                if (row === 5 || gameBoard[row + 1][col] !== 2) {
                     counters = incrementScores(countLastFour(2, p2ColLastFour), p2Singles, p2Doubles, p2Triples, p2Win);
                     p2Singles = counters[0];
                     p2Doubles = counters[1];
