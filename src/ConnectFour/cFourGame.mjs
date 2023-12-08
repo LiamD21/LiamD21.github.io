@@ -49,7 +49,7 @@ export function gameMain(){
     evBar.setEvalScore(getEvalScore());
 
     // add the next piece to be dragged in
-    addNextPiece(canvas.height, (cellSize/2) - 5, board, p1Color);
+    addNextPiece(canvas.width, (cellSize/2) - 5, board, p1Color);
 
     // attach handlers for placing pieces
     canvas.addEventListener("mousedown", handleMousePress);
@@ -61,13 +61,13 @@ export function gameMain(){
 
 /**
  * Adds the piece to be played next to the corner of the board
- * @param height the height of the canvas
+ * @param width the height of the canvas
  * @param radius the radius of the circle to draw
  * @param board the game board object
  * @param initialColor the string color value for the first color used, player1's color
  */
-function addNextPiece(height, radius, board, initialColor){
-    nextPiece = new NextPiece(initialColor, radius, height, ctx, board.getLeft(), board.getRight(), board.getTop(), board.getBottom());
+function addNextPiece(width, radius, board, initialColor){
+    nextPiece = new NextPiece(initialColor, radius, width, ctx, board.getLeft(), board.getRight(), board.getTop(), board.getBottom());
 }
 
 /**

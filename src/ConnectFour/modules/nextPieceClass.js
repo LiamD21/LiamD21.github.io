@@ -11,8 +11,9 @@ export class NextPiece{
     #boardLeft
     #boardRight
     #prevSide
+    #width;
 
-    constructor(color, radius, height, ctx, boardLeft, boardRight, boardTop, boardBottom) {
+    constructor(color, radius, width, ctx, boardLeft, boardRight, boardTop, boardBottom) {
         this.#color = color;
         this.#radius = radius;
         this.#context = ctx;
@@ -22,6 +23,7 @@ export class NextPiece{
         this.#boardRight = boardRight;
         this.#boardTop = boardTop;
         this.#boardLeft = boardLeft;
+        this.#width = width;
 
         this.#initialCenterX = this.#centerX;
         this.#initialCenterY = this.#centerY;
@@ -51,6 +53,9 @@ export class NextPiece{
         // check if the object is being dragged inside the board
         let inBoard = newX + this.#radius + 6 > this.#boardLeft && newX - this.#radius - 6 < this.#boardRight && newY + this.#radius + 6 > this.#boardTop && newY - this.#radius - 6 < this.#boardBottom;
 
+        // check if the object is being dragged onto the eval bar
+        let onEval = newX + this.#radius + 6 > this.#width * 19/20 - 15;
+
         if (newX < this.#boardLeft && !inBoard){
             this.#prevSide = "left";
         }
@@ -79,6 +84,11 @@ export class NextPiece{
                 case "bottom":
                     newY = this.#boardBottom + this.#radius + 6;
             }
+        }
+
+        // prevent dragging on the eval bar
+        if (onEval){
+            newX = this.#width * 19/20 - this.#radius - 20;
         }
 
         this.#draw(newX, newY);
