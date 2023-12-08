@@ -74,7 +74,64 @@ function evaluatePosition(){
         }
     }
 
-    // TODO check diagonal 4s as well
+    // Check ways to make 4 on the diagonals
+    let p1DiagStreak;
+    let p2DiagStreak;
+    for (let i = 0; i < 12; i++){
+        p1DiagStreak = 0;
+        p2DiagStreak = 0;
+        let moveRow, moveCol;
+
+        // for the right-down diagonals across the top
+        if (i < 4) {
+            moveRow = 0;
+            moveCol = i;
+        }
+        // for the right-down diagonals in the far left col
+        else if (i < 6){
+            moveRow = i - 3;
+            moveCol = 0;
+        }
+        // for the left-down diagonals across the top
+        else if (i < 10){
+            moveRow = 0;
+            moveCol = i - 3;
+        }
+        // for the left-down diagonals in the far right col
+        else {
+            moveRow = i - 9;
+            moveCol = 6;
+        }
+        while (moveRow <= 5) {
+            if (gameBoard[moveRow][moveCol] === 0) {
+                p1DiagStreak++;
+                p2DiagStreak++;
+            } else if (gameBoard[moveRow][moveCol] === 1) {
+                p1DiagStreak++;
+                p2DiagStreak = 0;
+            } else if (gameBoard[moveRow][moveCol] === 2) {
+                p1DiagStreak = 0;
+                p2DiagStreak++;
+            }
+
+            // adjust the col depending on which direction we are looking
+            if (i < 6) {
+                moveCol++;
+            }
+            else {
+                moveCol --;
+            }
+            moveRow ++;
+
+            // if we have a streak of 4 or more, add to the score
+            if (p1DiagStreak >= 4){
+                p1Score ++;
+            }
+            if (p2DiagStreak >= 4){
+                p2Score ++;
+            }
+        }
+    }
 
     // returns a score from 10 to -10, 10 being p1 wins, -10 being p2 wins
     return Math.round(p1Score-p2Score)/10;
