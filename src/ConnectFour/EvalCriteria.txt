@@ -4,17 +4,11 @@ Currently Implemented:
     - Total Possible 4s
         - Scoring
             - Each player has a score out of 69 possible ways to win the game
-            - There are 3 possible vertical 4s in each column of 6 - Total of 24
-            - There are 4 possible horizontal 4s in each row of 7 - Total of 21
+            - There are 3 possible vertical 4s in each of 7 columns - Total of 21
+            - There are 4 possible horizontal 4s in each of 6 rows - Total of 24
             - There are 12 possible diagonals in each direction - Total of 24
         - We find how many of these are available for each player after a move is made
         - Evaluation is done based on who has the most possible ways to win
-
-Implementation Plan:
-    - Weighted possible 4s
-        - Each way of making 4 is weighted differently based on if there are already pieces played for that player
-        - Weight will also vary based on the current player's turn
-            - If a player has 3/4 in a row but the opponent just played, they have an automatic win
-    - Recursive checks
-        - Recursively evaluate positions to a certain depth to find more clearly if a certain player has an advantage
-        - Takes into account who has the next move
+    - Weighted checks in possible 4s
+        - Some of the possible 4s already contain some pieces
+        - For each possible 4, if there is already 1, 2, or 3 pieces in it, it is weighted more heavily

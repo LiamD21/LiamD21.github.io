@@ -38,13 +38,15 @@ function evaluatePosition(){
     p1TotalOptions = p1TotalOptions - scores[2] - scores[4] - scores[6];
     p2TotalOptions = p2TotalOptions - scores[3] - scores[5] - scores[7];
 
+    console.log(scores);
+
     // create overall scores
-    // weights: empty options = 1, singles = 2, doubles = 4, triples = 10
-    let p1TotalWt = p1TotalOptions + (scores[2] * 2) + (scores[4] * 4) + (scores[6] * 10);
-    let p2TotalWt = p2TotalOptions + (scores[3] * 2) + (scores[5] * 4) + (scores[7] * 10);
+    // weights: empty options = 1, singles = 4, doubles = 10, triples = 50
+    let p1TotalWt = p1TotalOptions + (scores[2] * 4) + (scores[4] * 10) + (scores[6] * 50);
+    let p2TotalWt = p2TotalOptions + (scores[3] * 4) + (scores[5] * 10) + (scores[7] * 50);
 
     // return the weight as a score out of 10. negative means that p2 is ahead, positive means that p1 is ahead
-    return (p1TotalWt-p2TotalWt)/10;
+    return Math.round((p1TotalWt/(p1TotalWt+p2TotalWt)*100)-50)/10;
 }
 
 function checkPossibilities(){
@@ -120,7 +122,7 @@ function checkPossibilities(){
             }
             if (p2ColStreak >= 4){
                 p2Score ++;
-                counters = incrementScores(countLastFour(1, p2ColLastFour), p2Singles, p2Doubles, p2Triples, p2Win);
+                counters = incrementScores(countLastFour(2, p2ColLastFour), p2Singles, p2Doubles, p2Triples, p2Win);
                 p2Singles = counters[0];
                 p2Doubles = counters[1];
                 p2Triples = counters[2];
@@ -138,7 +140,7 @@ function checkPossibilities(){
             }
             if (p2RowStreaks[row] >= 4){
                 p2Score ++;
-                counters = incrementScores(countLastFour(1, p2RowLastFour), p2Singles, p2Doubles, p2Triples, p2Win);
+                counters = incrementScores(countLastFour(2, p2RowLastFour), p2Singles, p2Doubles, p2Triples, p2Win);
                 p2Singles = counters[0];
                 p2Doubles = counters[1];
                 p2Triples = counters[2];
@@ -210,14 +212,14 @@ function checkPossibilities(){
             if (p1DiagStreak >= 4){
                 p1Score ++;
                 counters = incrementScores(countLastFour(1, p1DiagLastFour), p1Singles, p1Doubles, p1Triples, p1Win);
-                p2Singles = counters[0];
-                p2Doubles = counters[1];
-                p2Triples = counters[2];
-                p2Win = counters[3];
+                p1Singles = counters[0];
+                p1Doubles = counters[1];
+                p1Triples = counters[2];
+                p1Win = counters[3];
             }
             if (p2DiagStreak >= 4){
                 p2Score ++;
-                counters = incrementScores(countLastFour(1, p2DiagLastFour), p2Singles, p2Doubles, p2Triples, p2Win);
+                counters = incrementScores(countLastFour(2, p2DiagLastFour), p2Singles, p2Doubles, p2Triples, p2Win);
                 p2Singles = counters[0];
                 p2Doubles = counters[1];
                 p2Triples = counters[2];
