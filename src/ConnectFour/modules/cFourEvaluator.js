@@ -220,20 +220,24 @@ function checkPossibilities(){
             }
 
             if (p1RowStreaks[row] >= 4){
-                p1Score ++;
-                counters = incrementScores(countLastFour(1, p1RowLastFour), p1Singles, p1Doubles, p1Triples, p1Win);
-                p1Singles = counters[0];
-                p1Doubles = counters[1];
-                p1Triples = counters[2];
-                p1Win = counters[3];
+                if (gameBoard[row][col - 4] !== 1 && gameBoard[row][col + 1] !== 1) {
+                    p1Score++;
+                    counters = incrementScores(countLastFour(1, p1RowLastFour), p1Singles, p1Doubles, p1Triples, p1Win);
+                    p1Singles = counters[0];
+                    p1Doubles = counters[1];
+                    p1Triples = counters[2];
+                    p1Win = counters[3];
+                }
             }
             if (p2RowStreaks[row] >= 4){
-                p2Score ++;
-                counters = incrementScores(countLastFour(2, p2RowLastFour), p2Singles, p2Doubles, p2Triples, p2Win);
-                p2Singles = counters[0];
-                p2Doubles = counters[1];
-                p2Triples = counters[2];
-                p2Win = counters[3];
+                if (gameBoard[row][col - 4] !== 2 && gameBoard[row][col + 1] !== 2) {
+                    p2Score++;
+                    counters = incrementScores(countLastFour(2, p2RowLastFour), p2Singles, p2Doubles, p2Triples, p2Win);
+                    p2Singles = counters[0];
+                    p2Doubles = counters[1];
+                    p2Triples = counters[2];
+                    p2Win = counters[3];
+                }
             }
         }
     }
