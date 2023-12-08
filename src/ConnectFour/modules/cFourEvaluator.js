@@ -38,12 +38,13 @@ function evaluatePosition(){
     p1TotalOptions = p1TotalOptions - scores[2] - scores[4] - scores[6];
     p2TotalOptions = p2TotalOptions - scores[3] - scores[5] - scores[7];
 
+    // HERE FOR TESTING PURPOSES
     console.log(scores);
 
     // create overall scores
-    // weights: empty options = 1, singles = 4, doubles = 10, triples = 50
-    let p1TotalWt = p1TotalOptions + (scores[2] * 4) + (scores[4] * 10) + (scores[6] * 50);
-    let p2TotalWt = p2TotalOptions + (scores[3] * 4) + (scores[5] * 10) + (scores[7] * 50);
+    // weights: empty options = 1, singles = 3, doubles = 50, triples = 650
+    let p1TotalWt = p1TotalOptions + (scores[2] * 3) + (scores[4] * 50) + (scores[6] * 650);
+    let p2TotalWt = p2TotalOptions + (scores[3] * 3) + (scores[5] * 50) + (scores[7] * 650);
 
     // return the weight as a score out of 10. negative means that p2 is ahead, positive means that p1 is ahead
     return Math.round((p1TotalWt/(p1TotalWt+p2TotalWt)*100)-50)/10;
