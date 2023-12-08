@@ -99,17 +99,19 @@ function handleMouseRelease(event){
             updateGameBoard(board.getGameState());
             evBar.setEvalScore(getEvalScore());
 
-            // check for a win
-            let win = board.checkWin();
             // check if there are any remaining places
             let done = board.checkDone();
 
-            if (win !== 0 || done){
+            // check for a win
+            if (getEvalScore() === 10 || getEvalScore() === -10 || done){
                 canvas.removeEventListener("mousedown", handleMousePress);
                 canvas.removeEventListener("mouseup", handleMouseRelease);
                 canvas.removeEventListener("mousemove", handleMouseDragged);
-                if (win !== 0) {
-                    winMain(win);
+                if (getEvalScore() === 10) {
+                    winMain(1);
+                }
+                else if (getEvalScore() === -10){
+                    winMain(2);
                 }
                 else {
                     winMain(-1);
