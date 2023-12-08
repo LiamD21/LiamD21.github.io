@@ -158,6 +158,7 @@ function checkPossibilities(){
         p2DiagLastFour = [-1, -1, -1, -1];
         let moveRow, moveCol;
 
+        console.log(i);
         // for the right-down diagonals across the top
         if (i < 4) {
             moveRow = 0;
@@ -178,7 +179,7 @@ function checkPossibilities(){
             moveRow = i - 9;
             moveCol = 6;
         }
-        while (moveRow <= 5) {
+        while (moveRow <= 5 && moveCol <= 6 && moveCol >= 0) {
             if (gameBoard[moveRow][moveCol] === 0) {
                 p1DiagStreak++;
                 p2DiagStreak++;
@@ -212,6 +213,7 @@ function checkPossibilities(){
             if (p1DiagStreak >= 4){
                 p1Score ++;
                 counters = incrementScores(countLastFour(1, p1DiagLastFour), p1Singles, p1Doubles, p1Triples, p1Win);
+                console.log(p1DiagLastFour);
                 p1Singles = counters[0];
                 p1Doubles = counters[1];
                 p1Triples = counters[2];
