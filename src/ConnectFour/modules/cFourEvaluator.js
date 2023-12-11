@@ -47,7 +47,7 @@ function evaluatePosition(){
     let p2TotalWt = p2TotalOptions + (scores[3] * 3) + (scores[5] * 50) + (scores[7] * 650);
 
     // return the weight as a score out of 10. negative means that p2 is ahead, positive means that p1 is ahead
-    return Math.round((p1TotalWt/(p1TotalWt+p2TotalWt)*100)-50)/10;
+    return Math.round(((p1TotalWt/(p1TotalWt+p2TotalWt)*100)-50)*2)/10;
 }
 
 function checkPossibilities(){
