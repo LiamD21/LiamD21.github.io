@@ -185,4 +185,12 @@ export class GameBoard{
     getGameState(){
         return this.#gameState;
     }
+
+    /**
+     * gets which players turn it currently is
+     * @return {*}
+     */
+    getTurn(){
+        return this.#turn;
+    }
 }

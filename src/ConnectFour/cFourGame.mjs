@@ -44,7 +44,7 @@ export function gameMain(){
     board = new GameBoard(canvas.width, canvas.height, cellSize, ctx, p1Color, p2Color);
 
     // Initialize the evaluator and draw the eval bar
-    updateGameBoard(board.getGameState());
+    updateGameBoard(board.getGameState(), board.getTurn());
     evBar = new evalBar(canvas, ctx);
     evBar.setEvalScore(getEvalScore());
 
@@ -96,7 +96,7 @@ function handleMouseRelease(event){
         if (nextCol !== -1 && !board.isColFull(nextCol-1)){
             board.playPiece(nextCol-1);
             board.nextTurn();
-            updateGameBoard(board.getGameState());
+            updateGameBoard(board.getGameState(), board.getTurn());
             evBar.setEvalScore(getEvalScore());
 
             // check if there are any remaining places

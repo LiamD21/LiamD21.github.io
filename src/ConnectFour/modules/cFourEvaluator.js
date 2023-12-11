@@ -2,13 +2,16 @@
 // Always keeps an updated instance of the game board ready
 let gameBoard;
 let evalScore;
+let turn;
 
 /**
  * Used by the game board class to update the local copy of the game state whenever it is changed
  * @param gB the new copy of the game state
+ * @param t which player's turn it is
  */
-export function updateGameBoard(gB){
+export function updateGameBoard(gB, t){
     gameBoard = gB;
+    turn = t;
     evalScore = evaluatePosition();
 }
 
@@ -46,10 +49,33 @@ function evaluatePosition(){
     let p1TotalWt = p1TotalOptions + (scores[2] * 3) + (scores[4] * 50) + (scores[6] * 650);
     let p2TotalWt = p2TotalOptions + (scores[3] * 3) + (scores[5] * 50) + (scores[7] * 650);
 
-    // return the weight as a score out of 10. negative means that p2 is ahead, positive means that p1 is ahead
-    return Math.round(((p1TotalWt/(p1TotalWt+p2TotalWt)*100)-50)*2)/10;
+    // if a player has only one 3, and it is not their turn, decrease its weight down to 100 because it can easily be blocked
+    if (scores[6] === 1 && turn === 2){
+        p1TotalWt -= 550;
+    }
+    if (scores[7] === 1 && turn === 1){
+        p2TotalWt -= 550;
+    }
+
+    // find the weight as a score out of 10. negative means that p2 is ahead, positive means that p1 is ahead
+    let score = ((p1TotalWt/(p1TotalWt+p2TotalWt)-0.5)*2);
+
+    // adjust based on whose turn it is
+    if (turn === 1){
+        score += 0.05;
+    }
+    else if (turn === 2){
+        score -= 0.05;
+    }
+
+    // return the score
+    return Math.round(score*100)/10;
 }
 
+/**
+ * Evaluates the current game board, finds the eval score and returns that
+ * @return {number[]}
+ */
 function checkPossibilities(){
     let p1Score = 0;
     let p2Score = 0;
