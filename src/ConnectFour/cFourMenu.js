@@ -5,8 +5,9 @@ import {gameMain} from "./cFourGame.mjs"
 // Global Variables
 let canvas;
 let ctx;
-let playButton;
-let isOverPlayButton = false;
+let playTwoPlayer, playOnePlayer;
+let isOverTwoPPlayButton = false;
+let isOverOnePPlayButton = false;
 
 /**
  * The main setup and handling loop for the main menu
@@ -14,7 +15,8 @@ let isOverPlayButton = false;
 export function main(){
     initializeCanvas();
     addText();
-    playButton = new Button(ctx, canvas.width/2 - 100, canvas.height*2/3, 100, 200, "PLAY", "#888888");
+    playTwoPlayer = new Button(ctx, canvas.width/3 - 100, canvas.height*2/3, 100, 200, "TWO PLAYER", "#888888");
+    playOnePlayer = new Button(ctx, canvas.width * 2/3 - 100, canvas.height*2/3, 100, 200, "SINGLE PLAYER", "#888888");
 }
 
 /**
@@ -48,12 +50,18 @@ function addText(){
  * @param event
  */
 function handleMouseClick(event){
-    // Check if we were over the play button when there was a click
-    if (isOverPlayButton){
+    // Check if we were over a button when there was a click
+    if (isOverTwoPPlayButton){
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         canvas.removeEventListener("click", handleMouseClick);
         canvas.removeEventListener("mousemove", handleMouseMove);
-        gameMain();
+        gameMain(2);
+    }
+    if (isOverOnePPlayButton){
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        canvas.removeEventListener("click", handleMouseClick);
+        canvas.removeEventListener("mousemove", handleMouseMove);
+        gameMain(1);
     }
 }
 
@@ -63,19 +71,34 @@ function handleMouseClick(event){
  * @param event
  */
 function handleMouseMove(event){
-    // check if mouse is hovering over the play button
-    if (event.clientX > playButton.getX() && event.clientX < playButton.getX() + playButton.getWidth() && event.clientY > playButton.getY() && event.clientY < playButton.getY() + playButton.getHeight()) {
+    // check if mouse is hovering over the two player play button
+    if (event.clientX > playTwoPlayer.getX() && event.clientX < playTwoPlayer.getX() + playTwoPlayer.getWidth() && event.clientY > playTwoPlayer.getY() && event.clientY < playTwoPlayer.getY() + playTwoPlayer.getHeight()) {
         // check if the mouse was just off the button
-        if (!isOverPlayButton) {
-            isOverPlayButton = true;
-            playButton.recolor("#d5d5d5");
+        if (!isOverTwoPPlayButton) {
+            isOverTwoPPlayButton = true;
+            playTwoPlayer.recolor("#d5d5d5");
         }
     }
 
     // if mouse is not over play button, but it just was over the button
-    else if (isOverPlayButton){
-        isOverPlayButton = false;
-        playButton.recolor("#888888");
+    else if (isOverTwoPPlayButton){
+        isOverTwoPPlayButton = false;
+        playTwoPlayer.recolor("#888888");
+    }
+
+    // check if mouse is hovering over the single player play button
+    if (event.clientX > playOnePlayer.getX() && event.clientX < playOnePlayer.getX() + playOnePlayer.getWidth() && event.clientY > playOnePlayer.getY() && event.clientY < playOnePlayer.getY() + playOnePlayer.getHeight()) {
+        // check if the mouse was just off the button
+        if (!isOverOnePPlayButton) {
+            isOverOnePPlayButton = true;
+            playOnePlayer.recolor("#d5d5d5");
+        }
+    }
+
+    // if mouse is not over play button, but it just was over the button
+    else if (isOverOnePPlayButton){
+        isOverOnePPlayButton = false;
+        playOnePlayer.recolor("#888888");
     }
 }
 

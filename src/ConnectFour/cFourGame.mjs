@@ -19,15 +19,17 @@ let win;
 let currentState;
 let board, evBar;
 let canvas, ctx;
+let numPlayers;
 
 /**
  * The main game loop
  */
-export function gameMain(){
+export function gameMain(n_p){
     win = false;
     currentState = states.READY;
     canvas = document.getElementById("canvas");
     ctx = canvas.getContext("2d");
+    numPlayers = n_p;
 
     // get the height and width
     canvas.height = window.innerHeight;

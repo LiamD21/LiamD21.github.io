@@ -45,16 +45,16 @@ function evaluatePosition(){
     console.log(scores);
 
     // create overall scores
-    // weights: empty options = 1, singles = 3, doubles = 50, triples = 650
-    let p1TotalWt = p1TotalOptions + (scores[2] * 3) + (scores[4] * 50) + (scores[6] * 650);
-    let p2TotalWt = p2TotalOptions + (scores[3] * 3) + (scores[5] * 50) + (scores[7] * 650);
+    // weights: empty options = 1, singles = 5, doubles = 75, triples = 800
+    let p1TotalWt = p1TotalOptions + (scores[2] * 5) + (scores[4] * 75) + (scores[6] * 800);
+    let p2TotalWt = p2TotalOptions + (scores[3] * 5) + (scores[5] * 75) + (scores[7] * 800);
 
-    // if a player has only one 3, and it is not their turn, decrease its weight down to 100 because it can easily be blocked
+    // if a player has only one 3, and it is not their turn, decrease its weight down to 200 because it can easily be blocked
     if (scores[6] === 1 && turn === 2){
-        p1TotalWt -= 550;
+        p1TotalWt -= 600;
     }
     if (scores[7] === 1 && turn === 1){
-        p2TotalWt -= 550;
+        p2TotalWt -= 600;
     }
 
     // find the weight as a score out of 10. negative means that p2 is ahead, positive means that p1 is ahead
