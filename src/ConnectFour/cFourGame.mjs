@@ -2,8 +2,7 @@
 import {GameBoard} from "./modules/gameBoardClass.js";
 import {NextPiece} from "./modules/nextPieceClass.js";
 import {winMain} from "./cFourWinScreen.mjs";
-import {updateGameBoard} from "./modules/cFourEvaluator.js";
-import {getEvalScore} from "./modules/cFourEvaluator.js";
+import {cFourEvaluator} from "./modules/cFourEvaluator.js";
 import {evalBar} from "./modules/evalBarClass.js";
 
 // create a state enum
@@ -17,7 +16,7 @@ let overNextPiece;
 let nextPiece;
 let win;
 let currentState;
-let board, evBar;
+let board, evBar, evaluator;
 let canvas, ctx;
 
 /**
@@ -44,9 +43,10 @@ export function gameMain(){
     board = new GameBoard(canvas.width, canvas.height, cellSize, ctx, p1Color, p2Color);
 
     // Initialize the evaluator and draw the eval bar
-    updateGameBoard(board.getGameState(), board.getTurn());
+    evaluator = new cFourEvaluator();
+    evaluator.updateGameBoard(board.getGameState(), board.getTurn());
     evBar = new evalBar(canvas, ctx);
-    evBar.setEvalScore(getEvalScore());
+    evBar.setEvalScore(evaluator.getEvalScore());
 
     // add the next piece to be dragged in
     addNextPiece(canvas.width, (cellSize/2) - 5, board, p1Color);
