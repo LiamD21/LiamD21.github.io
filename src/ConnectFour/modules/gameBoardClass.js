@@ -23,6 +23,16 @@ export class GameBoard{
     }
 
     /**
+     * Creates a copy of the game board for use during search
+     * @return {GameBoard}
+     */
+    copyBoard(){
+        let copyBoard = new GameBoard(this.#width, this.#height, this.#cellSize, this.#context, this.#color1, this.#color2);
+        copyBoard.setStateTurnForCopy(this.#gameState, this.#turn);
+        return copyBoard;
+    }
+
+    /**
      * Draws the full game board with all pieces in the correct places according to the game state
      * @private
      */
@@ -184,6 +194,16 @@ export class GameBoard{
      */
     getGameState(){
         return this.#gameState;
+    }
+
+    /**
+     * sets the game state and turn in the event that you need to copy a different board into this one during search
+     * @param state the game board array to copy here
+     * @param turn the turn to copy here
+     */
+    setStateTurnForCopy(state, turn){
+        this.#gameState = state;
+        this.#turn = turn;
     }
 
     /**
