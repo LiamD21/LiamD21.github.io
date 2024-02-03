@@ -96,21 +96,21 @@ function handleMouseRelease(event){
         if (nextCol !== -1 && !board.isColFull(nextCol-1)){
             board.playPiece(nextCol-1);
             board.nextTurn();
-            updateGameBoard(board.getGameState(), board.getTurn());
-            evBar.setEvalScore(getEvalScore());
+            evaluator.updateGameBoard(board.getGameState(), board.getTurn());
+            evBar.setEvalScore(evaluator.getEvalScore());
 
             // check if there are any remaining places
             let done = board.checkDone();
 
             // check for a win
-            if (getEvalScore() === 10 || getEvalScore() === -10 || done){
+            if (evaluator.getEvalScore() === 10 || evaluator.getEvalScore() === -10 || done){
                 canvas.removeEventListener("mousedown", handleMousePress);
                 canvas.removeEventListener("mouseup", handleMouseRelease);
                 canvas.removeEventListener("mousemove", handleMouseDragged);
-                if (getEvalScore() === 10) {
+                if (evaluator.getEvalScore() === 10) {
                     winMain(1);
                 }
-                else if (getEvalScore() === -10){
+                else if (evaluator.getEvalScore() === -10){
                     winMain(2);
                 }
                 else {

@@ -40,19 +40,16 @@ export class cFourEvaluator {
         p1TotalOptions = p1TotalOptions - scores[2] - scores[4] - scores[6];
         p2TotalOptions = p2TotalOptions - scores[3] - scores[5] - scores[7];
 
-        // HERE FOR TESTING PURPOSES
-        console.log(scores);
-
         // create overall scores
         // weights: empty options = 1, singles = 3, doubles = 50, triples = 650
         let p1TotalWt = p1TotalOptions + (scores[2] * 3) + (scores[4] * 50) + (scores[6] * 650);
         let p2TotalWt = p2TotalOptions + (scores[3] * 3) + (scores[5] * 50) + (scores[7] * 650);
 
         // if a player has only one 3, and it is not their turn, decrease its weight down to 100 because it can easily be blocked
-        if (scores[6] === 1 && turn === 2) {
+        if (scores[6] === 1 && this.#turn === 2) {
             p1TotalWt -= 550;
         }
-        if (scores[7] === 1 && turn === 1) {
+        if (scores[7] === 1 && this.#turn === 1) {
             p2TotalWt -= 550;
         }
 
@@ -60,9 +57,9 @@ export class cFourEvaluator {
         let score = ((p1TotalWt / (p1TotalWt + p2TotalWt) - 0.5) * 2);
 
         // adjust based on whose turn it is
-        if (turn === 1) {
+        if (this.#turn === 1) {
             score += 0.05;
-        } else if (turn === 2) {
+        } else if (this.#turn === 2) {
             score -= 0.05;
         }
 
@@ -113,17 +110,17 @@ export class cFourEvaluator {
             p2ColLastFour = [0, 0, 0, 0];
             for (let row = 0; row < 6; row++) {
                 // check the current element
-                if (gameBoard[row][col] === 0) {
+                if (this.#gameBoard[row][col] === 0) {
                     p1ColStreak++;
                     p2ColStreak++;
                     p1RowStreaks[row]++;
                     p2RowStreaks[row]++;
-                } else if (gameBoard[row][col] === 1) {
+                } else if (this.#gameBoard[row][col] === 1) {
                     p1ColStreak++;
                     p2ColStreak = 0;
                     p1RowStreaks[row]++;
                     p2RowStreaks[row] = 0;
-                } else if (gameBoard[row][col] === 2) {
+                } else if (this.#gameBoard[row][col] === 2) {
                     p1ColStreak = 0;
                     p2ColStreak++;
                     p1RowStreaks[row] = 0;
@@ -161,32 +158,32 @@ export class cFourEvaluator {
                             break;
                     }
                 }
-                p1ColLastFour[0] = gameBoard[row][col];
-                p2ColLastFour[0] = gameBoard[row][col];
+                p1ColLastFour[0] = this.#gameBoard[row][col];
+                p2ColLastFour[0] = this.#gameBoard[row][col];
                 switch (row) {
                     case 0:
-                        p1Row1LastFour[0] = gameBoard[row][col];
-                        p2Row1LastFour[0] = gameBoard[row][col];
+                        p1Row1LastFour[0] = this.#gameBoard[row][col];
+                        p2Row1LastFour[0] = this.#gameBoard[row][col];
                         break;
                     case 1:
-                        p1Row2LastFour[0] = gameBoard[row][col];
-                        p2Row2LastFour[0] = gameBoard[row][col];
+                        p1Row2LastFour[0] = this.#gameBoard[row][col];
+                        p2Row2LastFour[0] = this.#gameBoard[row][col];
                         break;
                     case 2:
-                        p1Row3LastFour[0] = gameBoard[row][col];
-                        p2Row3LastFour[0] = gameBoard[row][col];
+                        p1Row3LastFour[0] = this.#gameBoard[row][col];
+                        p2Row3LastFour[0] = this.#gameBoard[row][col];
                         break;
                     case 3:
-                        p1Row4LastFour[0] = gameBoard[row][col];
-                        p2Row4LastFour[0] = gameBoard[row][col];
+                        p1Row4LastFour[0] = this.#gameBoard[row][col];
+                        p2Row4LastFour[0] = this.#gameBoard[row][col];
                         break;
                     case 4:
-                        p1Row5LastFour[0] = gameBoard[row][col];
-                        p2Row5LastFour[0] = gameBoard[row][col];
+                        p1Row5LastFour[0] = this.#gameBoard[row][col];
+                        p2Row5LastFour[0] = this.#gameBoard[row][col];
                         break;
                     case 5:
-                        p1Row6LastFour[0] = gameBoard[row][col];
-                        p2Row6LastFour[0] = gameBoard[row][col];
+                        p1Row6LastFour[0] = this.#gameBoard[row][col];
+                        p2Row6LastFour[0] = this.#gameBoard[row][col];
                         break;
                 }
 
@@ -194,8 +191,8 @@ export class cFourEvaluator {
                 // if we have a vertical streak of 4 or more, add one way to get four and check for any pieces already there
                 if (p1ColStreak >= 4) {
                     p1Score++;
-                    if (row === 5 || gameBoard[row + 1][col] !== 1) {
-                        counters = incrementScores(countLastFour(1, p1ColLastFour), p1Singles, p1Doubles, p1Triples, p1Win);
+                    if (row === 5 || this.#gameBoard[row + 1][col] !== 1) {
+                        counters = this.#incrementScores(this.#countLastFour(1, p1ColLastFour), p1Singles, p1Doubles, p1Triples, p1Win);
                         p1Singles = counters[0];
                         p1Doubles = counters[1];
                         p1Triples = counters[2];
@@ -204,8 +201,8 @@ export class cFourEvaluator {
                 }
                 if (p2ColStreak >= 4) {
                     p2Score++;
-                    if (row === 5 || gameBoard[row + 1][col] !== 2) {
-                        counters = incrementScores(countLastFour(2, p2ColLastFour), p2Singles, p2Doubles, p2Triples, p2Win);
+                    if (row === 5 || this.#gameBoard[row + 1][col] !== 2) {
+                        counters = this.#incrementScores(this.#countLastFour(2, p2ColLastFour), p2Singles, p2Doubles, p2Triples, p2Win);
                         p2Singles = counters[0];
                         p2Doubles = counters[1];
                         p2Triples = counters[2];
@@ -243,9 +240,9 @@ export class cFourEvaluator {
                 }
 
                 if (p1RowStreaks[row] >= 4) {
-                    if (gameBoard[row][col - 4] !== 1 && gameBoard[row][col + 1] !== 1) {
+                    if (this.#gameBoard[row][col - 4] !== 1 && this.#gameBoard[row][col + 1] !== 1) {
                         p1Score++;
-                        counters = incrementScores(countLastFour(1, p1RowLastFour), p1Singles, p1Doubles, p1Triples, p1Win);
+                        counters = this.#incrementScores(this.#countLastFour(1, p1RowLastFour), p1Singles, p1Doubles, p1Triples, p1Win);
                         p1Singles = counters[0];
                         p1Doubles = counters[1];
                         p1Triples = counters[2];
@@ -253,9 +250,9 @@ export class cFourEvaluator {
                     }
                 }
                 if (p2RowStreaks[row] >= 4) {
-                    if (gameBoard[row][col - 4] !== 2 && gameBoard[row][col + 1] !== 2) {
+                    if (this.#gameBoard[row][col - 4] !== 2 && this.#gameBoard[row][col + 1] !== 2) {
                         p2Score++;
-                        counters = incrementScores(countLastFour(2, p2RowLastFour), p2Singles, p2Doubles, p2Triples, p2Win);
+                        counters = this.#incrementScores(this.#countLastFour(2, p2RowLastFour), p2Singles, p2Doubles, p2Triples, p2Win);
                         p2Singles = counters[0];
                         p2Doubles = counters[1];
                         p2Triples = counters[2];
@@ -295,13 +292,13 @@ export class cFourEvaluator {
                 moveCol = 6;
             }
             while (moveRow <= 5 && moveCol <= 6 && moveCol >= 0) {
-                if (gameBoard[moveRow][moveCol] === 0) {
+                if (this.#gameBoard[moveRow][moveCol] === 0) {
                     p1DiagStreak++;
                     p2DiagStreak++;
-                } else if (gameBoard[moveRow][moveCol] === 1) {
+                } else if (this.#gameBoard[moveRow][moveCol] === 1) {
                     p1DiagStreak++;
                     p2DiagStreak = 0;
-                } else if (gameBoard[moveRow][moveCol] === 2) {
+                } else if (this.#gameBoard[moveRow][moveCol] === 2) {
                     p1DiagStreak = 0;
                     p2DiagStreak++;
                 }
@@ -311,8 +308,8 @@ export class cFourEvaluator {
                     p1DiagLastFour[i] = p1DiagLastFour[i - 1];
                     p2DiagLastFour[i] = p2DiagLastFour[i - 1];
                 }
-                p1DiagLastFour[0] = gameBoard[moveRow][moveCol];
-                p2DiagLastFour[0] = gameBoard[moveRow][moveCol];
+                p1DiagLastFour[0] = this.#gameBoard[moveRow][moveCol];
+                p2DiagLastFour[0] = this.#gameBoard[moveRow][moveCol];
 
                 // adjust the col depending on which direction we are looking
                 if (i < 6) {
@@ -326,7 +323,7 @@ export class cFourEvaluator {
                 let counters;
                 if (p1DiagStreak >= 4) {
                     p1Score++;
-                    counters = incrementScores(countLastFour(1, p1DiagLastFour), p1Singles, p1Doubles, p1Triples, p1Win);
+                    counters = this.#incrementScores(this.#countLastFour(1, p1DiagLastFour), p1Singles, p1Doubles, p1Triples, p1Win);
                     p1Singles = counters[0];
                     p1Doubles = counters[1];
                     p1Triples = counters[2];
@@ -334,7 +331,7 @@ export class cFourEvaluator {
                 }
                 if (p2DiagStreak >= 4) {
                     p2Score++;
-                    counters = incrementScores(countLastFour(2, p2DiagLastFour), p2Singles, p2Doubles, p2Triples, p2Win);
+                    counters = this.#incrementScores(this.#countLastFour(2, p2DiagLastFour), p2Singles, p2Doubles, p2Triples, p2Win);
                     p2Singles = counters[0];
                     p2Doubles = counters[1];
                     p2Triples = counters[2];
@@ -354,7 +351,7 @@ export class cFourEvaluator {
      * @param lastFour the array of the last 4 pieces seen on the board
      * @return {number} the number of the player's pieces which were seen in the last 4 given
      */
-    countLastFour(player, lastFour) {
+    #countLastFour(player, lastFour) {
         let count = 0;
         for (let i = 0; i < 4; i++) {
             if (lastFour[i] === player) {
@@ -374,7 +371,7 @@ export class cFourEvaluator {
      * @param win 1 if the player has had a win, 0 otherwise
      * @return {(*|number)[]} an array with all the counters
      */
-    incrementScores(num, singles, doubles, triples, win) {
+    #incrementScores(num, singles, doubles, triples, win) {
         if (num > 0) {
             if (num > 1) {
                 if (num > 2) {
