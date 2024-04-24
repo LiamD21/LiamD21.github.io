@@ -4,6 +4,7 @@ import {NextPiece} from "./modules/nextPieceClass.js";
 import {winMain} from "./cFourWinScreen.mjs";
 import {cFourEvaluator} from "./modules/cFourEvaluator.js";
 import {evalBar} from "./modules/evalBarClass.js";
+import {cFourOpponent} from "./modules/cFourOpponent.js";
 
 // create a state enum
 const states = {
@@ -18,11 +19,17 @@ let win;
 let currentState;
 let board, evBar, evaluator;
 let canvas, ctx;
+let onePlayer, opponent;
 
 /**
  * The main game loop
  */
-export function gameMain(){
+export function gameMain(singlePlayer){
+    onePlayer = singlePlayer;
+    if (onePlayer){
+        opponent = new cFourOpponent();
+    }
+
     win = false;
     currentState = states.READY;
     canvas = document.getElementById("canvas");
@@ -77,7 +84,7 @@ function addNextPiece(width, radius, board, initialColor){
  */
 function handleMousePress(event) {
     // if the state is ready, and we are over the object, enter selected
-    if (currentState === states.READY && overNextPiece){
+    if (currentState === states.READY && overNextPiece && (board.getTurn() === 1 || (board.getTurn() === 2 && !onePlayer))){
         currentState = states.SELECTED;
     }
 }
@@ -104,28 +111,45 @@ function handleMouseRelease(event){
 
             // check for a win
             if (evaluator.getEvalScore() === 10 || evaluator.getEvalScore() === -10 || done){
-                canvas.removeEventListener("mousedown", handleMousePress);
-                canvas.removeEventListener("mouseup", handleMouseRelease);
-                canvas.removeEventListener("mousemove", handleMouseDragged);
-                if (evaluator.getEvalScore() === 10) {
-                    winMain(1);
-                }
-                else if (evaluator.getEvalScore() === -10){
-                    winMain(2);
-                }
-                else {
-                    winMain(-1);
-                }
+                winChecking();
             }
             else {
                 nextPiece.reset(board.getColor());
                 currentState = states.READY;
+
+                // if it is a one player game, the computer moves after the player does
+                if (onePlayer) {
+                    board.playPiece(opponent.doSearch(board));
+                    board.nextTurn();
+                    evaluator.updateGameBoard(board.getGameState(), board.getTurn());
+                    evBar.setEvalScore(evaluator.getEvalScore());
+
+                    done = board.checkDone();
+                    if (evaluator.getEvalScore() === 10 || evaluator.getEvalScore() === -10 || done){
+                        winChecking();
+                    }
+                }
             }
         }
         else {
             nextPiece.reset(board.getColor());
             currentState = states.READY;
         }
+    }
+}
+
+function winChecking() {
+    canvas.removeEventListener("mousedown", handleMousePress);
+    canvas.removeEventListener("mouseup", handleMouseRelease);
+    canvas.removeEventListener("mousemove", handleMouseDragged);
+    if (evaluator.getEvalScore() === 10) {
+        winMain(1);
+    }
+    else if (evaluator.getEvalScore() === -10){
+        winMain(2);
+    }
+    else {
+        winMain(-1);
     }
 }
 

@@ -46,10 +46,10 @@ export class cFourEvaluator {
     let p2TotalWt = p2TotalOptions + (scores[3] * 5) + (scores[5] * 75) + (scores[7] * 800);
 
     // if a player has only one 3, and it is not their turn, decrease its weight down to 200 because it can easily be blocked
-    if (scores[6] === 1 && turn === 2){
+    if (scores[6] === 1 && this.#turn === 2){
         p1TotalWt -= 600;
     }
-    if (scores[7] === 1 && turn === 1){
+    if (scores[7] === 1 && this.#turn === 1){
         p2TotalWt -= 600;
     }
 

@@ -1,5 +1,5 @@
 // importing
-import {cFourEvaluator} from "./cFourEvaluator";
+import {cFourEvaluator} from "./cFourEvaluator.js";
 
 export class cFourOpponent{
     #depthLimit = 4;
@@ -12,7 +12,7 @@ export class cFourOpponent{
         let actns = [];
         for (let i = 0; i < 8; i++){
             if (!state.isColFull(i)){
-                actns.add(i);
+                actns += i;
             }
         }
         return actns;
@@ -52,7 +52,7 @@ export class cFourOpponent{
 
     #maxValue(state, depth){
         let evaluator = new cFourEvaluator();
-        evaluator.updateGameBoard(state, state.getTurn());
+        evaluator.updateGameBoard(state.getGameState(), state.getTurn());
 
         if (evaluator.getEvalScore() === 10 || evaluator.getEvalScore() === -10){
             return evaluator.getEvalScore();
@@ -84,7 +84,7 @@ export class cFourOpponent{
 
     #minValue(state, depth){
         let evaluator = new cFourEvaluator();
-        evaluator.updateGameBoard(state, state.getTurn());
+        evaluator.updateGameBoard(state.getGameState(), state.getTurn());
 
         if (evaluator.getEvalScore() === 10 || evaluator.getEvalScore() === -10){
             return evaluator.getEvalScore();
