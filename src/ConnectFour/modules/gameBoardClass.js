@@ -28,7 +28,7 @@ export class GameBoard{
      */
     copyBoard(){
         let copyBoard = new GameBoard(this.#width, this.#height, this.#cellSize, this.#context, this.#color1, this.#color2);
-        copyBoard.setStateTurnForCopy(this.#gameState, this.#turn);
+        copyBoard.setStateTurnForCopy(structuredClone(this.#gameState), this.#turn);
         return copyBoard;
     }
 

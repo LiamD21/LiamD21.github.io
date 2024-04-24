@@ -118,7 +118,7 @@ function handleMouseRelease(event){
                 currentState = states.READY;
 
                 // if it is a one player game, the computer moves after the player does
-                if (onePlayer) {
+                if (onePlayer && board.getTurn() === 2) {
                     board.playPiece(opponent.doSearch(board));
                     board.nextTurn();
                     evaluator.updateGameBoard(board.getGameState(), board.getTurn());
@@ -129,6 +129,7 @@ function handleMouseRelease(event){
                         winChecking();
                     }
                 }
+                nextPiece.reset(board.getColor());
             }
         }
         else {
