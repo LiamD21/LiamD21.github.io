@@ -119,15 +119,7 @@ function handleMouseRelease(event){
 
                 // if it is a one player game, the computer moves after the player does
                 if (onePlayer && board.getTurn() === 2) {
-                    board.playPiece(opponent.doSearch(board));
-                    board.nextTurn();
-                    evaluator.updateGameBoard(board.getGameState(), board.getTurn());
-                    evBar.setEvalScore(evaluator.getEvalScore());
-
-                    done = board.checkDone();
-                    if (evaluator.getEvalScore() === 10 || evaluator.getEvalScore() === -10 || done){
-                        winChecking();
-                    }
+                    miniMaxOpponentMove();
                 }
                 nextPiece.reset(board.getColor());
             }
@@ -136,6 +128,18 @@ function handleMouseRelease(event){
             nextPiece.reset(board.getColor());
             currentState = states.READY;
         }
+    }
+}
+
+function miniMaxOpponentMove(){
+    board.playPiece(opponent.doSearch(board));
+    board.nextTurn();
+    evaluator.updateGameBoard(board.getGameState(), board.getTurn());
+    evBar.setEvalScore(evaluator.getEvalScore());
+
+    let done = board.checkDone();
+    if (evaluator.getEvalScore() === 10 || evaluator.getEvalScore() === -10 || done){
+        winChecking();
     }
 }
 
