@@ -26,9 +26,9 @@ export class cFourEvaluator {
     #evaluatePosition() {
         let scores = this.#checkPossibilities();
         // if we have any wins, the game is over
-        if (scores[8] === 1) {
+        if (scores[8] >= 1) {
             return 10;
-        } else if (scores[9] === 1) {
+        } else if (scores[9] >= 1) {
             return -10;
         }
 

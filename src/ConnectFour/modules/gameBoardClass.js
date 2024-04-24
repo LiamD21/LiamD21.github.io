@@ -23,6 +23,20 @@ export class GameBoard{
     }
 
     /**
+     * Creates a string for the transposition table to represent this current game state
+     * @return {string}
+     */
+    getTranspositionString(){
+        let ts = "";
+        for (let i = 0; i < 6; i++) {
+            for (let j = 0; j < 7; j++) {
+                ts += this.#gameState[i][j];
+            }
+        }
+        return ts;
+    }
+
+    /**
      * Creates a copy of the game board for use during search
      * @return {GameBoard}
      */
